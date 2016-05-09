@@ -88,8 +88,8 @@
             <?php endif; ?>
             <?php if ($this->session->userdata('username')==null) :?>
                 <div class="collapse navbar-collapse pull-right" id="bs-example-navbar-collapse-1">
-                <a class="navbar-brand"
-                    <?php echo anchor("Cont_user/Login","Login");?></a>
+                <a class="navbar-brand" 
+                    <?php echo anchor("Cont_user/Login","Login","style='color: #FFFFFF'");?></a>
                 </div>
             <?php endif; ?>
             <!-- /.navbar-collapse -->

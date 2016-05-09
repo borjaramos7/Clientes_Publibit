@@ -404,11 +404,9 @@ class Cont_empresa extends CI_Controller {
      */
     public function BorraArchivosOrden($idorden) {
             $archivos = $this->Model_emp->ArchivosXOrden($idorden);
-            echo "<pre>";
-            print_r($archivos);
-            echo "</pre>";
             foreach ($archivos as $archivo) {
                 $file = "C:\\xampp\htdocs\Clientes_Publibit\archivos\\" . $archivo['nomarchivo'];
+                //$file = "archivos/" . $archivo['nomarchivo'];Para servidor
                 $do = unlink($file);//elimina archivo
                 $this->Model_emp->Borraarchivo($archivo['nomarchivo']);//elimina datos del archivo de la BBDD
 
