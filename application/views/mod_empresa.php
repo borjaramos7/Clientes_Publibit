@@ -1,13 +1,18 @@
 <div id="envoltura">
         <div id="contenedor">
-            <div style='color:orange; border:2px solid orange;margin-right: 420px; margin-left: 2px'><b>
-            <?php echo validation_errors(); ?></b></div>
+            <?php if (validation_errors() != "") : ?>
+                <div class="alert alert-danger alert-dismissable">
+                    <button type="button" width="10%" class="close" data-dismiss="alert">&times;</button>
+                    <strong><?= validation_errors(); ?></strong>
+                </div>
+            <?php endif; ?>
+        </div>
             <div id="cuerpo">
  
                 <form style="border:solid 3px orange; margin-right: 420px; margin-left: 2px" 
-                      action="../ModificaEmpresa" method="post" >
+                      action="<?php echo $action;?>" method="post" >
                 <input type="hidden" id="idemp" name="idemp" value="<?= $datosemp['idcliente'] ;?>">
-                <div style="margin-left:30px; padding:3px,3px,3px,3px;">
+                <div style="margin-left:30px; padding:3px 3px 3px 3px;">
                     <label for="nombreemp">Nombre de empresa/cliente:</label>
                         <input name="nombreemp" type="text" id="nombreemp" class="list-group-item"
                                accept="" value="<?php echo $datosemp['nomempresa'];?>" >

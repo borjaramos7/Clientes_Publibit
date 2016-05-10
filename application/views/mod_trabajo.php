@@ -1,7 +1,12 @@
 <div id="envoltura">
         <div id="contenedor">
-            <div style="border:solid 3px orange; margin-right: 170px; margin-left: 2px"><b>
-            <?php echo validation_errors(); ?></b></div>
+            <?php if (validation_errors() != "") : ?>
+                <div class="alert alert-danger alert-dismissable">
+                    <button type="button" width="10%" class="close" data-dismiss="alert">&times;</button>
+                    <strong><?= validation_errors(); ?></strong>
+                </div>
+            <?php endif; ?>
+        </div>
             <div id="cuerpo">
                 <form style="border:solid 3px orange; margin-right: 170px; margin-left: 2px" action="../ModificaOrden" method="post" >
                     <input type="hidden" id="idemp" name="idemp" value="<?= $idemp ;?>">

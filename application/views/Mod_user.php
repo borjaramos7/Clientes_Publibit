@@ -1,7 +1,7 @@
 <!-- Vista para modificar usuarios -->
 <html>  
 <head>
-    <title>Formulario</title>
+    <title></title>
     <meta charset="utf-8">
     <link type="text/css" href="./../css/style.css" rel="stylesheet" />
 </head>
@@ -14,8 +14,12 @@
             <div id="lead">
                 <!--Datos de <?= $user->nombreus ;?>-->
             </div>
-            <div style='color:orangered; border:2px solid orange;'><b>
-            <?php echo validation_errors(); ?></b></div>
+            <?php if (validation_errors() != "") : ?>
+                <div class="alert alert-danger alert-dismissable">
+                    <button type="button" width="10%" class="close" data-dismiss="alert">&times;</button>
+                    <strong><?= validation_errors(); ?></strong>
+                </div>
+            <?php endif; ?>
             <div id="cuerpo">
  
                 <form style="border:solid 2px orange; " action="VerificaDatosUsuarioMod" method="post" >
