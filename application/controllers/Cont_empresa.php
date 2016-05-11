@@ -20,21 +20,15 @@ class Cont_empresa extends CI_Controller {
      * Funcion que llama a una vista que lista las empresas ya sea a todas si no se ha buscado ningun caracter o
      * un conjunto de empresas que coincidan con los parametros, si en el buscador existe algun dato
      */
-    public function VerEmpresa() {
+    public function VerEmpresa($ordenado='') {
         if (isset($_POST['q'])) {
             $q = $_POST['q'];
             $listabus = $this->Model_emp->Buscador($q);
-            /* echo "<pre>ajax";
-              print_r($listabus);
-              echo "</pre>"; */
             $cuerpo = $this->load->view('lista_empresas', array(
                 'listacli' => $listabus));
             //$encabezado="Empresas que coinciden";
         } else {
-            $datospag = $this->PaginacionEmp();
-            /* echo "<pre>NOajax";
-              print_r($datospag);
-              echo "</pre>"; */
+            $datospag = $this->PaginacionEmp($ordenado);
             $this->CargaPlantilla(
                     $this->load->view('lista_empresas', array(
                         'listacli' => $datospag['lista'],
@@ -47,7 +41,7 @@ class Cont_empresa extends CI_Controller {
      * Paginacion para empresas
      * @return type
      */
-    public function PaginacionEmp() {
+    public function PaginacionEmp($ordenado) {
         $opciones = array();
         $desde = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
@@ -72,14 +66,22 @@ class Cont_empresa extends CI_Controller {
         $opciones['first_tag_close'] = '</li>';
         $opciones['last_tag_open'] = '<li>';
         $opciones['last_tag_close'] = '</li>';
-        // $opciones['uri_segment'] = 3;
+        //$opciones['uri_segment'] = 3;
 
         $this->pagination->initialize($opciones);
-
-        $data['lista'] = $this->Model_emp->ListaEmp($opciones['per_page'], $desde);
-        $data['paginacion'] = $this->pagination->create_links();
-
-        return $data;
+        
+        
+        if ($ordenado == 'pendientes') {
+            echo $opciones['per_page'], $desde;
+            /*
+            $datapend['lista'] = $this->Model_emp->ListaEmpXpend($opciones['per_page'], $desde);
+            $datapend['paginacion'] = $this->pagination->create_links();
+            return $datapend;*/
+        } else {
+            $data['lista'] = $this->Model_emp->ListaEmp($opciones['per_page'], $desde);
+            $data['paginacion'] = $this->pagination->create_links();
+            return $data;
+        }
         //$this->load->view('principal', $data);
     }
 
@@ -387,16 +389,18 @@ class Cont_empresa extends CI_Controller {
 
         $orden = $this->Model_emp->SacaOrden($idorden);
         $orden['nomempresa'] = $this->Model_emp->SacaNombreCliente($orden['_idcliente']);
-        //echo $this->Model_emp->Numarchivosxorden($idorden);
         if ($this->Model_emp->Numarchivosxorden($idorden) > 0) {
-            //$this->DescargaArchivos($idorden); Problemas: me descarga solo el primero y no deja borrar
+            
+            $this->CreaZip($idorden);
+            //No pasa de aqui
             $this->BorraArchivosOrden($idorden);
         }
 
         $this->pdf->ExportaPdf($orden);
-        $this->Model_emp->BorraOrden($idorden);
+        //$this->Model_emp->BorraOrden($idorden);
+        
     }
-
+    
     /**
      * Recibe una id de una orden y elimina los archivos que tenga dicha orden asi como su existencia en la bbdd
      * @param type $idorden
@@ -416,22 +420,26 @@ class Cont_empresa extends CI_Controller {
     }
 
     /**
-     * Recibe la id de una orden y descarga sus ficheros
+     * Recibe la id de una orden y añade sus ficheros a un .zip, devuelve el nombre del archivo.
      * @param type $idorden
+     * @return type
      */
-    public function DescargaArchivos($idorden) {
+    public function CreaZip($idorden) {
         $archivos = $this->Model_emp->ArchivosXOrden($idorden);
+        
+        $zip = new ZipArchive();
+        $filename = "C:\\xampp\htdocs\Clientes_Publibit\archivos\\fichero_orden_".$idorden."_.zip";
 
-        foreach ($archivos as $archivo) {
-
-            $ruta = "C:\\xampp\htdocs\Clientes_Publibit\archivos\\" . $archivo['nomarchivo']; //solo para local
-            header('Content-Type: application/force-download');
-            header('Content-Disposition: attachment; filename=' . $archivo['nomarchivo']);
-            header('Content-Transfer-Encoding: binary');
-            header('Content-Length: ' . filesize($ruta));
-
-            readfile($ruta);
+        if ($zip->open($filename, ZipArchive::CREATE)!==TRUE) {
+        exit("cannot open <$filename>\n");
         }
+        foreach ($archivos as $archivo) {
+            $zip->addFile("C:/xampp/htdocs/Clientes_Publibit/archivos/".$archivo['nomarchivo'],$archivo['nomarchivo']);
+        }
+        $this->zip->download("fichero_orden_".$idorden."_.zip");
+
+        $zip->close();
+        //return "fichero_orden_".$idorden."_.zip";
     }
 
 }

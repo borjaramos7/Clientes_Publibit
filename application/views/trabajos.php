@@ -15,7 +15,7 @@
             Estado <p style="color:orange;"><?= $trabajo['estado'] ?></p></b>
             <!--Descripción: <?= $trabajo['descripcion'] ?><br-->
 
-           <div class="col-md-9" style="text-align:center">
+           <div style="text-align:center">
             <a  class="btn list-group-item btn-info" 
             <?php echo anchor("Cont_empresa/VerOrdenComp/{$trabajo['idtrabajo']}","Ver orden detalle");?></a></div>
             </div>

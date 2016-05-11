@@ -1,7 +1,7 @@
 <?php foreach ($pantallas as $pantalla) :?>
 <!--div style="border:3px solid #F88000;margin-right: 80%"-->
     <div class="col-md-6" style="text-align:center">
-        <img style="border:3px solid #F88000;" width="80%" height="80%"
+        <img style="border:7px solid buttonface;" width="90%" height="90%"
              src="<?= base_url() . 'asset/img/' . $pantalla['foto'] ?>" class="img-rounded" alt="img_pantalla">
         <b><p style="color:orange;"><?php echo $pantalla['localidad'] ?><br>
                 <?php echo $pantalla['direccion'] ?></p></b>

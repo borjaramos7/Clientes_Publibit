@@ -30,6 +30,14 @@ class Model_emp extends CI_Model {
         $listacliente = $this->db->query($query);
         return $listacliente->result_array();
     }
+    
+    public function ListaEmpXPend($limit, $start) {
+        //$this->db->limit($limit,$start);
+        $query = "select * from cliente order by "
+                . "(select count(*) from trabajo where estado='pendiente') LIMIT " . $start . "," . $limit;
+        $listacliente = $this->db->query($query);
+        return $listacliente->result_array();
+    }
 
     /**
      * Recibe la id de una empresa y devuelve el numero de trabajos pendientes que tiene dicha empresa.

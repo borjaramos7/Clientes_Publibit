@@ -1,4 +1,4 @@
-<table style="border:solid 3px white;text-align: center;" class="table table-hover">
+<table style="text-align: center;" class="table table-hover">
             <tr class="info">
                 <td >
                     <img src="<?=base_url().'asset/'?>img/negocios.png"><br>Nombre empresa
@@ -13,7 +13,8 @@
                     <img src="<?=base_url().'asset/'?>img/tecnologia.png"><br>CIF
                 </td>
                 <td>
-                    <img src="<?=base_url().'asset/'?>img/negocios-1.png"><br>Ordenes<br>Pendientes
+                    <img src="<?=base_url().'asset/'?>img/negocios-1.png"><br>
+                        <?php echo anchor("Cont_empresa/VerEmpresa/".'pendientes',"Ordenes <br> Pendientes");?>
                 </td>
             </tr>
         <?php foreach ($listacli as $cliente) :?>
@@ -30,8 +31,8 @@
             </tr>   
     <?php endforeach; ?>
     </table>
-<div class="paginacion">
-<?php echo @$paginacion ?>
-</div>
+<div style="text-align: center" class="paginacion"><?php echo @$paginacion ?></div>
+                    
+
         
 
