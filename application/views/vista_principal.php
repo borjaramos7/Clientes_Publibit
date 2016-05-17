@@ -9,6 +9,7 @@
 	 <!--cript src="//code.jquery.com/jquery-1.10.2.js"></script>
 	 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script-->
          <script type="text/javascript" src="<?=base_url().'asset/js/ajax.js'?>"></script>
+         
 	 <link rel="stylesheet" href="/resources/demos/style.css">
 	 
 	  <script>
@@ -101,10 +102,10 @@
 
         <div class="row">
 
-            <div style="text-align: center;" class="col-md-2">
+            <div id="botones" style="text-align: center;" class="col-md-2">
                 <?php if ($this->session->userdata('username')!=null) :?>
                 <b><div id="aa" class="list-group">
-                    <a  src="<?=base_url().'asset/'?>img/negocios.png" style="background-color: orange" class="list-group-item" 
+                    <a style="background-color: orange" class="list-group-item" 
                         <?php echo anchor("Cont_empresa/AddEmpresa","Añadir cliente");?>
                         <span src="<?=base_url().'asset/'?>img/negocios.png"></span></a>
                 </div>

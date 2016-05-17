@@ -397,7 +397,7 @@ class Cont_empresa extends CI_Controller {
         }
 
         $this->pdf->ExportaPdf($orden);
-        //$this->Model_emp->BorraOrden($idorden);
+        $this->Model_emp->BorraOrden($idorden);
         
     }
     
@@ -427,19 +427,11 @@ class Cont_empresa extends CI_Controller {
     public function CreaZip($idorden) {
         $archivos = $this->Model_emp->ArchivosXOrden($idorden);
         
-        $zip = new ZipArchive();
-        $filename = "C:\\xampp\htdocs\Clientes_Publibit\archivos\\fichero_orden_".$idorden."_.zip";
-
-        if ($zip->open($filename, ZipArchive::CREATE)!==TRUE) {
-        exit("cannot open <$filename>\n");
-        }
         foreach ($archivos as $archivo) {
-            $zip->addFile("C:/xampp/htdocs/Clientes_Publibit/archivos/".$archivo['nomarchivo'],$archivo['nomarchivo']);
+            $this->zip->read_file("C:/xampp/htdocs/Clientes_Publibit/archivos/".$archivo['nomarchivo']); 
         }
-        $this->zip->download("fichero_orden_".$idorden."_.zip");
+        $this->zip->download("ficheros_orden_".$idorden."_.zip");
 
-        $zip->close();
-        //return "fichero_orden_".$idorden."_.zip";
     }
 
 }

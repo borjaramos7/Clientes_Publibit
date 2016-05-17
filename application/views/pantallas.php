@@ -11,9 +11,7 @@
                 <span class="caret"></span></button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                 <li role="presentation"><?php echo anchor("Cont_spot/VerSpotDePant/{$pantalla['idpantalla']}", "Ver Spots"); ?></li>
-                <!--li role="presentation"><?php echo anchor("Cont_user/DarBajausuario", "Dar de baja"); ?></li>
-                <li role="presentation" class="divider"></li>
-                <li role="presentation"><?php echo anchor("Cont_user/CargaDatosUs", "Modificar Datos"); ?></li-->
+                <li role="presentation"><?php echo anchor("Cont_spot/BorraPantallaSeg/{$pantalla['idpantalla']}", "Borrar Pantalla"); ?></li>
             </ul>
         </div><br>
     </div>

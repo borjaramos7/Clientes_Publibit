@@ -21,7 +21,7 @@ class Pdf extends FPDF {
                 $pdf->AddPage();
                 $pdf->SetFont('helvetica','B',26);
                 $pdf->SetTextColor(248,128,0);
-                $pdf->Cell(0,7,"Orden nº ".$orden['idtrabajo'],0,0,'C');
+                $pdf->Cell(0,7,"Orden ".$orden['idtrabajo'],0,0,'C');
                 $pdf->Ln();$pdf->Ln();
                 $pdf->SetFont('helvetica','B',12);
                 $pdf->SetTextColor(70,70,70);

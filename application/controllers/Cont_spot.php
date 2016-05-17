@@ -30,9 +30,7 @@ class Cont_spot extends CI_Controller {
         $this->CargaReglasSpot();
 
         if ($this->form_validation->run() == FALSE) {
-            $this->CargaPlantilla(
-                    $this->load->view('reg_spot', array
-                        ('idemp' => $this->input->post('idemp')), TRUE));
+            $this->NuevoSpot($this->input->post('idemp'));
         } else {
             $datosspot = array(
                 'mesescont' => $this->input->post('meses'),
@@ -41,8 +39,9 @@ class Cont_spot extends CI_Controller {
                 'precio' => $this->input->post('precio'),
                 '_idcliente' => $this->input->post('idemp'));
             $this->Model_spot->AltaSpot($datosspot);
+            redirect('Cont_spot/VerSpots/' . $this->input->post('idemp'), 'location', 301);
         }
-        redirect('Cont_spot/VerSpots/' . $this->input->post('idemp'), 'location', 301);
+        
     }
 
     /**
@@ -51,9 +50,6 @@ class Cont_spot extends CI_Controller {
      */
     public function VerSpots($idemp) {
         $spotsxemp = $this->Model_spot->SpotsXEmp($idemp);
-        /* echo "<pre>";
-          print_r($listacli);
-          echo "</pre>"; */
         $this->CargaPlantilla(
                 $this->load->view('spots', array(
                     'spots' => $spotsxemp,
@@ -111,11 +107,12 @@ class Cont_spot extends CI_Controller {
      * Funcion encargada de crear las reglas para validar un spot
      */
     public function CargaReglasSpot() {
-        $this->form_validation->set_rules('meses', 'Meses contratados', 'numeric');
-        $this->form_validation->set_rules('repet', 'Repeticiones por mes', 'numeric');
-        $this->form_validation->set_rules('precio', 'Precio', 'numeric');
+        $this->form_validation->set_rules('meses', 'Meses contratados', 'numeric|required');
+        $this->form_validation->set_rules('repet', 'Repeticiones por mes', 'numeric|required');
+        $this->form_validation->set_rules('precio', 'Precio', 'numeric|required');
 
         $this->form_validation->set_message('numeric', 'El campo %s tiene que tener un valor numerico');
+        $this->form_validation->set_message('required', 'El campo %s no puede estar vacio');
     }
 
     /**
@@ -146,7 +143,26 @@ class Cont_spot extends CI_Controller {
         }
         //redirect('/Cont_Spot/VerSpotComp/'.$this->input->post('idspot'), 'location', 301);
     }
-
+    
+    /**
+     * Recibe una id de pantalla y llama a una vista que te pide una confirmacion de borrado
+     * @param type $idpant
+     */
+    public function BorraPantallaSeg($idpant) {
+        $this->CargaPlantilla(
+                $this->load->view('seg_borrarpant', array(
+                    'idpant' => $idpant
+                        ), TRUE), "¿Estas seguro de borrar esta pantalla(Se borraran todas las asociaciones con spots)?");
+    }
+    
+    /**
+     * Recibe una id de pantalla y borra los spots asociados a esa pantalla asi como los datos de dicha pantalla
+     * @param type $idpant
+     */
+    public function BorraPantalla($idpant) {
+        $this->Model_spot->BorraPant($idpant);
+    }
+    
     /**
      * Reglas de validacion para pantallas
      */

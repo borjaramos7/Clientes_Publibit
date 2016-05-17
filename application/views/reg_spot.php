@@ -7,7 +7,6 @@
                 </div>
             <?php endif; ?>
             <div id="cuerpo">
- 
                 <form style="border:solid 3px orange; margin-right: 380px; margin-left: 2px" action="../AddSpot" method="post" >
                     <input type="hidden" id="idemp" name="idemp" value="<?= $idemp ;?>">
                     <div style="margin-left:30px; padding:3px,3px,3px,3px;">

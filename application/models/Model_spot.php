@@ -39,7 +39,18 @@ class Model_spot extends CI_Model {
         $spotxemp = $this->db->query($query);
         return $spotxemp->result_array();
     }
-
+    
+    /**
+     * Recibe la id de una pantalla y elimina de la BBDD sus spots asociados y posteriormente los datos de la pantalla
+     * @param type $idpant
+     */
+    public function BorraPant($idpant) {
+        $query = "delete from spotxpantalla where _idpantalla=" . $idpant;
+        $this->db->query($query);
+        $query = "delete from pantalla where idpantalla=" . $idpant;
+        $this->db->query($query);
+    }
+    
     /**
      * recibe la id de un spot y devuelve todos sus datos
      * @param type $idspot
