@@ -17,7 +17,7 @@
 <legend>Acciones</legend>
     <div class="col-md-3" style="text-align:center">
         <a  class="btn-warning list-group-item" 
-            <?php echo anchor("Cont_spot/ShowModificaSpot/{$spot['idspot']}", "Modificar Spot"); ?></a>
+            <?php echo anchor("Cont_spot/ModificaSpot/{$spot['idspot']}", "Modificar Spot"); ?></a>
     </div>
     <div class="col-md-3" style="text-align:center">
         <a  class="btn-warning list-group-item" 

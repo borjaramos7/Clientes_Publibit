@@ -1,4 +1,4 @@
-<table style="text-align: center;" class="table table-hover">
+<table id="myTable" style="text-align: center;" class="table table-hover">
             <tr class="info">
                 <td >
                     <img src="<?=base_url().'asset/'?>img/negocios.png"><br>Nombre empresa

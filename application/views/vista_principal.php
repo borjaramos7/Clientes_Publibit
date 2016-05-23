@@ -9,7 +9,11 @@
 	 <!--cript src="//code.jquery.com/jquery-1.10.2.js"></script>
 	 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script-->
          <script type="text/javascript" src="<?=base_url().'asset/js/ajax.js'?>"></script>
-         
+         <!--link href="cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
+<link href="cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js">
+<script>$(document).ready(function(){
+    $('#myTable').DataTable();
+});</script-->
 	 <link rel="stylesheet" href="/resources/demos/style.css">
 	 
 	  <script>
@@ -118,7 +122,7 @@
                         <?php echo anchor("Cont_empresa/VerOrdenesPend","Ordenes pendientes");?></a></div>
                 <hr style="color: orange" size="1"/>
                 <a  style="background-color: buttonface" class="list-group-item" 
-                        <?php echo anchor("Cont_spot/NuevaPantalla","Añadir Pantalla");?></a>
+                        <?php echo anchor("Cont_spot/AddPantalla","Añadir Pantalla");?></a>
                 <a  style="background-color: buttonface" class="list-group-item" 
                         <?php echo anchor("Cont_spot/VerPantallas","Ver pantallas");?></a>
                 <br>

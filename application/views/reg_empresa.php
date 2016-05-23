@@ -20,7 +20,7 @@
             <div id="cuerpo">
  
                 <form style="border:solid 3px orange; margin-right: 420px; margin-left: 2px" 
-                      action="VerificaDatosEmpresa" method="post" >
+                      action="" method="post" >
                 <div style="margin-left:30px; padding:3px,3px,3px,3px;">
                     <label for="nombreemp">Nombre de empresa/cliente:</label>
                         <input name="nombreemp" type="text" id="nombreemp" class="list-group-item"

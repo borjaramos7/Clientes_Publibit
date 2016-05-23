@@ -11,7 +11,8 @@
     <span class="help-block"><?= $orden['fecha_inicio'] ?></span>
     <legend>Estado</legend>
     <span class="help-block"><?= $orden['estado'] ?></span>
-
+    
+    <input type="hidden" id="idorden" name="idorden" value="<?= $orden['idtrabajo'] ;?>">
     <legend>Acciones</legend>
     <div class="col-md-4" style="text-align:center">
         <a  class="btn-warning list-group-item" 
@@ -22,8 +23,9 @@
             <?php echo anchor("Cont_empresa/ListaArchivos/{$orden['idtrabajo']}", "Ver archivos"); ?></a>
     </div>
     <div class="col-md-4" style="text-align:center">
-         <a  class="btn-warning list-group-item" 
-            <?php echo anchor("Cont_empresa/BorrarOrden/{$orden['idtrabajo']}", "Borrar Orden"); ?></a>
+        <button onclick="MultiplesTareas()" id="borrar">Borrar orden</button>
+         <!--a id="borrar" class="btn-warning list-group-item" 
+            <?php echo anchor("Cont_empresa/BorrarArchConSeg/{$orden['idtrabajo']}", "Borrar Orden"); ?></a-->
     </div>
         <?php if ($orden['estado'] == 'pendiente') : ?>
             <div class="col-md-4" style="text-align:center">
@@ -36,3 +38,4 @@
             </div>
          <?php endif; ?>
 </fieldset>
+

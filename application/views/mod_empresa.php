@@ -10,7 +10,7 @@
             <div id="cuerpo">
  
                 <form style="border:solid 3px orange; margin-right: 420px; margin-left: 2px" 
-                      action="<?php echo $action;?>" method="post" >
+                      action="" method="post" >
                 <input type="hidden" id="idemp" name="idemp" value="<?= $datosemp['idcliente'] ;?>">
                 <div style="margin-left:30px; padding:3px 3px 3px 3px;">
                     <label for="nombreemp">Nombre de empresa/cliente:</label>

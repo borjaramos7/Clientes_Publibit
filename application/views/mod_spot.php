@@ -10,7 +10,7 @@
             <div id="cuerpo">
  
                 <form style="border:solid 3px orange; margin-right: 380px; margin-left: 2px"
-                      action="<?php echo $action;?>" method="post" >
+                      action="" method="post" >
                     <input type="hidden" id="idemp" name="idemp" value="<?= $idemp ;?>">
                     <input type="hidden" id="idspot" name="idspot" value="<?= $spot['idspot'] ;?>">
                     <div style="margin-left:30px; padding:3px,3px,3px,3px;">

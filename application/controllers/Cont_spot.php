@@ -16,21 +16,11 @@ class Cont_spot extends CI_Controller {
      * @param type $idemp
      */
     public function NuevoSpot($idemp) {
+         $this->CargaReglasSpot();
+        if ($this->form_validation->run() == FALSE) {       
         $this->CargaPlantilla(
                 $this->load->view('reg_spot', array
                     ('idemp' => $idemp), TRUE), "Nuevo spot para " . $this->Model_emp->SacaNombreCliente($idemp));
-    }
-
-    /**
-     * Se encarga de verificar los datos del spot y en caso de que sean correctos realiza una llamada al modelo para que este
-     * lo inserte en la BBDD
-     */
-    public function AddSpot() {
-
-        $this->CargaReglasSpot();
-
-        if ($this->form_validation->run() == FALSE) {
-            $this->NuevoSpot($this->input->post('idemp'));
         } else {
             $datosspot = array(
                 'mesescont' => $this->input->post('meses'),
@@ -57,29 +47,22 @@ class Cont_spot extends CI_Controller {
                         ), TRUE), "Spots de " . $this->Model_emp->SacaNombreCliente($idemp));
     }
 
-    /**
-     * Recibe la id de un spot y llama a la vista para modificarlo, habiendo sacado mediante el modelo los datos que tenia
-     * antes de la modificacion.
-     * @param type $idspot
-     */
-    public function ShowModificaSpot($idspot, $action = '../ModificaSpot') {
-        $spot = $this->Model_spot->SacaSpot($idspot);
-        $this->CargaPlantilla($this->load->view('mod_spot', array(
-                    'idemp' => $spot['_idcliente'],
-                    'spot' => $spot,
-                    'action' => $action
-                        ), TRUE), "Modificar datos del spot " . $spot['idspot']);
-    }
 
     /**
      * Verifica los nuevos datos introducidos y en caso de que sean correctos llama al modelo para que los modifique
      * en la id correcta
      */
-    public function ModificaSpot() {
+    public function ModificaSpot($idspot) {
         $this->CargaReglasSpot();
 
         if ($this->form_validation->run() == FALSE) {
-            $this->ShowModificaSpot($this->input->post('idspot'), "ModificaSpot");
+            
+            $spot = $this->Model_spot->SacaSpot($idspot);
+            
+        $this->CargaPlantilla($this->load->view('mod_spot', array(
+                    'idemp' => $spot['_idcliente'],
+                    'spot' => $spot
+                        ), TRUE), "Modificar datos del spot " . $spot['idspot']);
         } else {
             $datosspot = array(
                 'repxmes' => $this->input->post('repet'),
@@ -116,32 +99,27 @@ class Cont_spot extends CI_Controller {
     }
 
     /**
-     * Llama a la vista para insertar una nuva pantalla
-     */
-    public function NuevaPantalla() {
-        $prov = $this->Model_spot->SacaProv();
-        $this->CargaPlantilla(
-                $this->load->view('reg_pantalla', array(
-                    'provincias' => $prov
-                        ), TRUE), "Registro de nueva pantalla");
-    }
-
-    /**
      * Recoge los datos del formulario y se los pasa al modelo para que los inserte
      */
     public function AddPantalla() {
         $this->CargaReglasPant();
 
         if ($this->form_validation->run() == FALSE) {
-            $this->NuevaPantalla();
+            $prov = $this->Model_spot->SacaProv();
+            
+            $this->CargaPlantilla(
+                    $this->load->view('reg_pantalla', array(
+                        'provincias' => $prov
+                            ), TRUE), "Registro de nueva pantalla");
         } else {
             $datospant = array(
                 'localidad' => $this->input->post('localidad'),
                 'direccion' => $this->input->post('direccion'),
                 'prov_cod' => $this->input->post('provincia'));
             $this->Model_spot->AddPant($datospant);
+            redirect('/Cont_Spot/VerPantallas/');
         }
-        //redirect('/Cont_Spot/VerSpotComp/'.$this->input->post('idspot'), 'location', 301);
+       
     }
     
     /**

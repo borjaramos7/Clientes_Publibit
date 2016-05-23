@@ -12,8 +12,21 @@ class Cont_empresa extends CI_Controller {
      * Llama a la vista donde se registran las nuevas empresas
      */
     public function AddEmpresa() {
-        $this->CargaPlantilla(
-                $this->load->view('reg_empresa', "", TRUE), "Registro de empresas");
+        $this->CargaReglas();
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->CargaPlantilla(
+                    $this->load->view('reg_empresa', "", TRUE),"Registro de empresas");
+        } else {
+            $datosemp = array(
+                'nomempresa' => $this->input->post('nombreemp'),
+                'cif' => $this->input->post('cif'),
+                'emailcontacto' => $this->input->post('correo'),
+                'numcontacto' => $this->input->post('numcon'));
+
+            $this->Model_emp->AltaEmp($datosemp);
+            redirect('/Cont_empresa/VerEmpresa', 'location', 301);
+        }
     }
 
     /**
@@ -21,27 +34,42 @@ class Cont_empresa extends CI_Controller {
      * un conjunto de empresas que coincidan con los parametros, si en el buscador existe algun dato
      */
     public function VerEmpresa($ordenado='') {
-        if (isset($_POST['q'])) {
-            $q = $_POST['q'];
-            $listabus = $this->Model_emp->Buscador($q);
-            $cuerpo = $this->load->view('lista_empresas', array(
-                'listacli' => $listabus));
-            //$encabezado="Empresas que coinciden";
-        } else {
-            $datospag = $this->PaginacionEmp($ordenado);
+        $_SESSION['estado']['ordenado']=$ordenado;
+            $datospag = $this->PaginacionEmp();
             $this->CargaPlantilla(
                     $this->load->view('lista_empresas', array(
                         'listacli' => $datospag['lista'],
                         'paginacion' => $datospag['paginacion']
                             ), TRUE), "Empresas asociadas");
-        }
+    }
+    
+    /**
+     * Funcion para el buscador que funciona con AJAX
+     */
+    public function BuscaAjax() {
+        //$q = $_POST['q'];
+        $_SESSION['estado']['buscador']=$_POST['q'];
+            $listabus = $this->Model_emp->Buscador($_SESSION['estado']['buscador']);
+            $cuerpo = $this->load->view('lista_empresas', array(
+                'listacli' => $listabus));
     }
 
+    public function ListarDatos($desde=0) {
+        if ($_SESSION['estado']['ordenado']=='pendientes')
+        {
+            
+        }
+        else
+        {}
+    }
+    
+    
+    
     /**
      * Paginacion para empresas
      * @return type
      */
-    public function PaginacionEmp($ordenado) {
+    public function PaginacionEmp($desde=0) {
         $opciones = array();
         $desde = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
@@ -71,7 +99,7 @@ class Cont_empresa extends CI_Controller {
         $this->pagination->initialize($opciones);
         
         
-        if ($ordenado == 'pendientes') {
+        if ($_SESSION['estado']['ordenado'] == 'pendientes') {
             echo $opciones['per_page'], $desde;
             /*
             $datapend['lista'] = $this->Model_emp->ListaEmpXpend($opciones['per_page'], $desde);
@@ -117,7 +145,34 @@ class Cont_empresa extends CI_Controller {
         redirect('/Cont_empresa/VerTrabajos/' . $this->input->post("idemp") . '', 'location', 301);
         //}
     }
-
+    
+    /**
+     * recibe la id de un trabajo llama al modelo para sacar los datos de dicho trabajo y los devulve para que puedas ver
+     * los datos anteriores antes de modificarlos
+     * @param type $idorden
+     */
+    public function ShowModificaOrden($idorden) {
+        $orden = $this->Model_emp->SacaOrden($idorden);
+        $this->CargaPlantilla($this->load->view('mod_trabajo', array(
+                    'idemp' => $orden['_idcliente'],
+                    'orden' => $orden
+                        ), TRUE), "Modificar orden de trabajo " . $orden['idtrabajo']);
+    }
+    
+    /**
+     * Recoge por post los datos de una modificacion y llama al modelo para que inserte dichos datos
+     */
+    public function ModificaOrden() {
+        $datosorden = array(
+            'denominacion' => $this->input->post('denom'),
+            'descripcion' => $this->input->post('descrip'),
+            'estado' => 'pendiente',
+            'fecha_inicio' => $this->input->post('fecha'),
+            '_idcliente' => $this->input->post('idemp'));
+        $this->Model_emp->ModOrden($datosorden, $this->input->post('idorden'));
+        redirect('/Cont_empresa/VerOrdenComp/' . $this->input->post("idorden") . '', 'location', 301);
+    }
+    
     /**
      * recibe la id de una empresa ,llama al modelo para sacar sus trabajos y llama a la vista que los muestra
      * @param type $idemp
@@ -132,42 +187,19 @@ class Cont_empresa extends CI_Controller {
     }
 
     /**
-     * recibe la id de un trabajo llama al modelo para sacar los datos de dicho trabajo y los devulve para que puedas ver
-     * los datos anteriores antes de modificarlos
-     * @param type $idorden
-     */
-    public function ShowModificaOrden($idorden) {
-        $orden = $this->Model_emp->SacaOrden($idorden);
-        $this->CargaPlantilla($this->load->view('mod_trabajo', array(
-                    'idemp' => $orden['_idcliente'],
-                    'orden' => $orden
-                        ), TRUE), "Modificar orden de trabajo " . $orden['idtrabajo']);
-    }
-
-    /**
-     * recibe la id de un trabajo, llama al modelo para sacar los datos de esa empresa y los devulve para que puedas 
-     * ver los datos antoerioes antes de modificarlos
+     * Recibe la id de un cliente y modifica sus datos
      * @param type $idcli
      */
-    public function ShowModEmpresa($idcli, $action = "../ModificaEmpresa") {
-        $datosemp = $this->Model_emp->SacaEmpresa($idcli);
-
-        $this->CargaPlantilla($this->load->view('mod_empresa', array(
-                    'datosemp' => $datosemp,
-                    'action' => $action
-                        ), TRUE), "Modificar los datos de " . $datosemp['nomempresa']);
-    }
-
-    /**
-     * verifica los datos que has introducido para modificar tu empresa y si son correctos llama al modelo para que 
-     * realice dichos cambios
-     */
-    public function ModificaEmpresa() {
+    public function ModificaEmpresa($idcli) {
         $this->CargaReglasmod();
 
         if ($this->form_validation->run() == FALSE) {
-            //redirect('/Cont_empresa/ShowModEmpresa/'.$this->input->post("idemp"), 'location', 301);   
-            $this->ShowModEmpresa($this->input->post('idemp'), "ModificaEmpresa");
+            
+            $datosemp = $this->Model_emp->SacaEmpresa($idcli);
+
+            $this->CargaPlantilla($this->load->view('mod_empresa', array(
+                    'datosemp' => $datosemp
+                        ), TRUE), "Modificar los datos de " . $datosemp['nomempresa']);
         } else {
             $datosemp = array(
                 'nomempresa' => $this->input->post('nombreemp'),
@@ -200,20 +232,6 @@ class Cont_empresa extends CI_Controller {
         $this->CargaPlantilla($this->load->view('EmpresaComp', array(
                     'datosemp' => $datosemp
                         ), TRUE), $datosemp['nomempresa']);
-    }
-
-    /**
-     * Recoge por post los datos de una modificacion y llama al modelo para que inserte dichos datos
-     */
-    public function ModificaOrden() {
-        $datosorden = array(
-            'denominacion' => $this->input->post('denom'),
-            'descripcion' => $this->input->post('descrip'),
-            'estado' => 'pendiente',
-            'fecha_inicio' => $this->input->post('fecha'),
-            '_idcliente' => $this->input->post('idemp'));
-        $this->Model_emp->ModOrden($datosorden, $this->input->post('idorden'));
-        redirect('/Cont_empresa/VerOrdenComp/' . $this->input->post("idorden") . '', 'location', 301);
     }
 
     /**
@@ -286,28 +304,6 @@ class Cont_empresa extends CI_Controller {
             redirect('/Cont_empresa/VerOrdenComp/' . $this->input->post("idorden") . '', 'location', 301);
         } else {
             echo "Ha ocurrido un error en la subida del archivo " . $_FILES['uploadedfile']['name'];
-        }
-    }
-
-    /**
-     * Verifica si los datos que coge por post del formulario son correctos y si es asi llama al modelo para que
-     * los inserte en la bbdd
-     */
-    public function VerificaDatosEmpresa() {
-        $this->CargaReglas();
-
-        if ($this->form_validation->run() == FALSE) {
-            $this->CargaPlantilla(
-                    $this->load->view('reg_empresa', "", TRUE));
-        } else {
-            $datosemp = array(
-                'nomempresa' => $this->input->post('nombreemp'),
-                'cif' => $this->input->post('cif'),
-                'emailcontacto' => $this->input->post('correo'),
-                'numcontacto' => $this->input->post('numcon'));
-
-            $this->Model_emp->AltaEmp($datosemp);
-            redirect('/Cont_empresa/VerEmpresa', 'location', 301);
         }
     }
 
@@ -385,22 +381,29 @@ class Cont_empresa extends CI_Controller {
      * Recibe la id de un trabajo y exporta un pdf con los datos de esa orden 
      * @param type $idorden
      */
-    public function BorrarOrden($idorden) {
+    public function BorrarOrden() {
 
-        $orden = $this->Model_emp->SacaOrden($idorden);
+        $orden = $this->Model_emp->SacaOrden($_POST['q']);
         $orden['nomempresa'] = $this->Model_emp->SacaNombreCliente($orden['_idcliente']);
-        if ($this->Model_emp->Numarchivosxorden($idorden) > 0) {
-            
-            $this->CreaZip($idorden);
+        /*if ($this->Model_emp->Numarchivosxorden($idorden) > 0) {
+ 
+            $this->BorrarArchConSeg($idorden);
+            //$this->CreaZip($idorden);
             //No pasa de aqui
-            $this->BorraArchivosOrden($idorden);
-        }
+            //$this->BorraArchivosOrden($idorden);
+        }*/
 
         $this->pdf->ExportaPdf($orden);
-        $this->Model_emp->BorraOrden($idorden);
-        
+        //$this->Model_emp->BorraOrden($idorden);
     }
     
+    public function BorrarArchConSeg() {
+        $this->CargaPlantilla(
+                $this->load->view('seg_borrararchivos', array(
+                    'idorden' => $_POST['q']
+                        ), TRUE), "¿Estas seguro de borrar los archivos de esa orden?");
+    }
+   
     /**
      * Recibe una id de una orden y elimina los archivos que tenga dicha orden asi como su existencia en la bbdd
      * @param type $idorden
@@ -416,15 +419,18 @@ class Cont_empresa extends CI_Controller {
             if ($do != true) {
                 echo "Hay un error en la descarga de " . $archivo['nomarchivo'] . "<br />";
             }
+            //$this->Model_emp->BorraOrden($idorden);
         }
     }
 
     /**
-     * Recibe la id de una orden y añade sus ficheros a un .zip, devuelve el nombre del archivo.
+     * Recibe la id de una orden y añade sus ficheros a un .zip que luego descarga.
      * @param type $idorden
      * @return type
      */
-    public function CreaZip($idorden) {
+    public function CreaZip() {
+        $idorden=$_POST['q'];
+        
         $archivos = $this->Model_emp->ArchivosXOrden($idorden);
         
         foreach ($archivos as $archivo) {

@@ -27,7 +27,7 @@
     </div>
     <div class="col-md-3" style="text-align:center">
         <a  class="btn-warning list-group-item" 
-            <?php echo anchor("Cont_empresa/ShowModEmpresa/{$datosemp['idcliente']}", "Modificar datos"); ?></a>
+            <?php echo anchor("Cont_empresa/ModificaEmpresa/{$datosemp['idcliente']}", "Modificar datos"); ?></a>
     </div>
 </fieldset>
 

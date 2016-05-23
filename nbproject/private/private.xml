@@ -3,16 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/models/Model_us.php</file>
-            <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/views/lista_empresas.php</file>
             <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/controllers/Cont_spot.php</file>
             <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/controllers/Cont_empresa.php</file>
-            <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/views/aviso_descarga.php</file>
-            <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/views/pantallas.php</file>
-            <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/views/listaarch.php</file>
-            <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/views/trabajos.php</file>
-            <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/config/autoload.php</file>
-            <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/models/Model_emp.php</file>
+            <file>file:/C:/xampp/htdocs/Clientes_Publibit/asset/js/ajax.js</file>
+            <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/views/seg_borrararchivos.php</file>
             <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/views/TrabajoComp.php</file>
         </group>
     </open-files>
