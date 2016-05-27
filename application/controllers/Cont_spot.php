@@ -6,6 +6,14 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Cont_spot extends CI_Controller {
+    public function __construct() {
+        parent::__construct();
+        if (!$this->Model_us->EstaDentro())
+        {
+            redirect("Cont_user/Login");
+            exit;
+        }
+    }
 
     public function index() {
         

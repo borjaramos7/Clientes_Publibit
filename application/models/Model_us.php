@@ -17,7 +17,29 @@ class Model_us extends CI_Model {
     public function AltaUsuario($newusuario) {
         $this->db->insert('usuario', $newusuario);
     }
-
+    
+    public function Login($usuario,$contr) {
+        if ($this->CompUser($usuario, $contr)){
+            $newdata = array(
+                'username' => $this->input->post('user'),
+                'logged_in' => TRUE,
+                'id' => $this->Model_us->SacaIdUser($this->input->post('user')),
+                'correo' => $this->Model_us->SacaEmailUser($this->input->post('user'))
+            );
+            $this->session->set_userdata($newdata);
+            return true;
+        }
+        else return false;
+    }
+    
+    public function EstaDentro() {
+        return $this->session->userdata("logged_in");
+    }
+    
+    public function Logout() {
+        $this->session->set_userdata("logged_in",false);
+    }
+    
     /**
      * Recibe un nombre de usuario y una contraseña y devuelve un booleano en funcion de si coinciden en la bbdd o no.
      * @param type $usuario

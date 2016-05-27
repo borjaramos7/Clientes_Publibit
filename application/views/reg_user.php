@@ -17,7 +17,7 @@
             <?php endif; ?>
             <div id="cuerpo">
  
-                <form style="border:solid 2px orange; margin-right: 420px; margin-left: 2px" action="VerificaDatosUsuario" method="post" >
+                <form style="border:solid 2px orange; margin-right: 60%; margin-left: 2px" action="VerificaDatosUsuario" method="post" >
                 <div style="margin-left:30px; padding:3px,3px,3px,3px;">
                     <label for="nombreuser">Nombre de usuario:</label>
                         <input name="nombreuser" type="text" id="nombreuser" class="list-group-item"
@@ -52,6 +52,7 @@
            
         </div>
  
+    </div>
     </div>
  
 </body>

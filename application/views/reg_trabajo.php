@@ -8,7 +8,7 @@
             <?php endif; ?>
             <div id="cuerpo">
  
-                <form style="border:solid 3px orange; margin-right: 170px; margin-left: 2px" action="../AddOrden" method="post" >
+                <form style="border:solid 3px orange; margin-right: 30%; margin-left: 2px" action="../AddOrden" method="post" >
                     <input type="hidden" id="idemp" name="idemp" value="<?= $idemp ;?>">
                     <div style="margin-left:30px; padding:3px,3px,3px,3px;">
                     <label for="denom">Denominacion trabajo</label>
@@ -16,9 +16,7 @@
                                accept="" value="<?php echo set_value('denom');?>" ><br>
                         
                         <label for="descrip">Descripcion trabajo</label>
-                        <textarea id="descrip" name="descrip" class="form-control" rows="9" cols="12">
-                            <?php echo set_value('descrip');?>
-                        </textarea><br>
+                        <textarea id="descrip" name="descrip" class="form-control" rows="9" cols="12"><?php echo set_value('descrip');?></textarea><br>
                         
                     <label for="pendiente">Estado del trabajo</label><br>
                      <div class="radio">
@@ -45,3 +43,4 @@
            
         </div>
     </div>
+  </div>

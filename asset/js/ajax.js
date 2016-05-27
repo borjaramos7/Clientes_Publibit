@@ -26,35 +26,8 @@ function buscador(){
     
     
     
-    xmlhttp.open("POST","BuscaAjax",true);
+    /* ruta absoluta */xmlhttp.open("POST","BuscaAjax",true);
     xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
     xmlhttp.send("q="+n);
-}
-
-function MultiplesTareas(){
-
-    var n = document.getElementById('idorden').value;
-    xmlhttp = new XMLHttpRequest();
-    
- 
-    
-    xmlhttp.onreadystatechange = function ()
-    {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-        {
-            document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
-        }
-    };
-
-    
-    xmlhttp.open("POST","../CreaZip",true);
-    xmlhttp.setRequestHeader("Content-Type", "application/octet-stream");
-    xmlhttp.send("q="+n);
-    /*
-    xmlhttp2 = new XMLHttpRequest();
-    
-    xmlhttp2.open("POST","../BorrarOrden",true);
-    xmlhttp2.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    xmlhttp2.send("q="+n);*/
 }
     

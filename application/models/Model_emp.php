@@ -27,14 +27,17 @@ class Model_emp extends CI_Model {
     public function ListaEmp($limit, $start) {
         //$this->db->limit($limit,$start);
         $query = "select * from cliente order by nomempresa LIMIT " . $start . "," . $limit;
+        
         $listacliente = $this->db->query($query);
         return $listacliente->result_array();
     }
     
-    public function ListaEmpXPend($limit, $start) {
+    public function ListaEmpXPend($limit, $start) {//Where para mostrar solo pendientes
         //$this->db->limit($limit,$start);
-        $query = "select * from cliente order by "
-                . "(select count(*) from trabajo where estado='pendiente') LIMIT " . $start . "," . $limit;
+        $query = "select * from cliente where idcliente in "
+                . "(select _idcliente from trabajo where idtrabajo in ("
+                . "select idtrabajo from trabajo where estado='pendiente' group by _idcliente))"
+                . " LIMIT " . $start . "," . $limit;
         $listacliente = $this->db->query($query);
         return $listacliente->result_array();
     }
@@ -60,7 +63,13 @@ class Model_emp extends CI_Model {
         $numtra = $this->db->query($query);
         return $numtra->row()->total;
     }
-
+    
+    public function BuscaPorDen($texto){
+        $query = "select * from trabajo where denominacion LIKE '%" . $texto . "%' order by denominacion";
+        $listaordenes = $this->db->query($query);
+        return $listaordenes->result_array();
+    }
+    
     /**
      * Recibe los datos de una nueva orden y los inserta en la BBDD
      * @param type $orden

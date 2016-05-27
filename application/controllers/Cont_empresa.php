@@ -3,7 +3,15 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Cont_empresa extends CI_Controller {
-
+    
+    public function __construct() {
+        parent::__construct();
+        if (!$this->Model_us->EstaDentro())
+        {
+            redirect("Cont_user/Login");
+            exit;
+        }
+    }
     public function index() {
         
     }
@@ -33,9 +41,9 @@ class Cont_empresa extends CI_Controller {
      * Funcion que llama a una vista que lista las empresas ya sea a todas si no se ha buscado ningun caracter o
      * un conjunto de empresas que coincidan con los parametros, si en el buscador existe algun dato
      */
-    public function VerEmpresa($ordenado='') {
+    public function VerEmpresa($ordenado='N',$desde=0) {
         $_SESSION['estado']['ordenado']=$ordenado;
-            $datospag = $this->PaginacionEmp();
+            $datospag = $this->PaginacionEmp($ordenado, $desde);
             $this->CargaPlantilla(
                     $this->load->view('lista_empresas', array(
                         'listacli' => $datospag['lista'],
@@ -54,28 +62,29 @@ class Cont_empresa extends CI_Controller {
                 'listacli' => $listabus));
     }
 
-    public function ListarDatos($desde=0) {
+    /*public function ListarDatos($desde=0) {
         if ($_SESSION['estado']['ordenado']=='pendientes')
         {
             
         }
         else
         {}
-    }
-    
-    
-    
+    }*/
+     
     /**
      * Paginacion para empresas
      * @return type
      */
-    public function PaginacionEmp($desde=0) {
+    public function PaginacionEmp($ordenado, $desde) {
         $opciones = array();
-        $desde = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        //$desde = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
         $opciones['per_page'] = 4;
-        $opciones['base_url'] = base_url() . 'index.php/Cont_empresa/VerEmpresa';
-        $opciones['total_rows'] = $this->Model_emp->TotalClientes();
+        $opciones['base_url'] = site_url('Cont_empresa/VerEmpresa/'.$ordenado);
+        
+        if ($ordenado!='S'){$opciones['total_rows'] = $this->Model_emp->TotalClientes();}
+        else {$opciones['total_rows']=count($this->Model_emp->ListaEmpXpend($opciones['per_page'], $desde));}
+        
         $opciones['full_tag_open'] = '<ul class="pagination">';
         $opciones['full_tag_close'] = '</ul>';
         $opciones['num_tag_open'] = '<li>';
@@ -97,20 +106,17 @@ class Cont_empresa extends CI_Controller {
         //$opciones['uri_segment'] = 3;
 
         $this->pagination->initialize($opciones);
-        
-        
-        if ($_SESSION['estado']['ordenado'] == 'pendientes') {
-            echo $opciones['per_page'], $desde;
-            /*
+       
+        if ($ordenado == 'S') {
+            
             $datapend['lista'] = $this->Model_emp->ListaEmpXpend($opciones['per_page'], $desde);
             $datapend['paginacion'] = $this->pagination->create_links();
-            return $datapend;*/
+            return $datapend;
         } else {
             $data['lista'] = $this->Model_emp->ListaEmp($opciones['per_page'], $desde);
             $data['paginacion'] = $this->pagination->create_links();
             return $data;
         }
-        //$this->load->view('principal', $data);
     }
 
     /**
@@ -242,7 +248,16 @@ class Cont_empresa extends CI_Controller {
         $this->Model_emp->EndOrden($idorden);
         redirect('/Cont_empresa/VerOrdenesPend/', 'location', 301);
     }
-
+    
+    public function BuscaOrd() {
+        $listaordenes=$this->Model_emp->BuscaPorDen($this->input->post('buscaordenes'));
+        //echo "<pre>".print_r($listaordenes)."</pre>";
+        $this->CargaPlantilla(
+                $this->load->view('trabajos', array(
+                    'trabajos' => $listaordenes,
+                        ), TRUE), "Busqueda de ordenes");
+    }
+    
     /**
      * Llama al modelo para sacar las ordenes pendientes y llama a una vista para mostrarlas
      */
@@ -381,27 +396,29 @@ class Cont_empresa extends CI_Controller {
      * Recibe la id de un trabajo y exporta un pdf con los datos de esa orden 
      * @param type $idorden
      */
-    public function BorrarOrden() {
+    public function BorrarOrden($idorden) {
 
-        $orden = $this->Model_emp->SacaOrden($_POST['q']);
+        $orden = $this->Model_emp->SacaOrden($idorden);
         $orden['nomempresa'] = $this->Model_emp->SacaNombreCliente($orden['_idcliente']);
-        /*if ($this->Model_emp->Numarchivosxorden($idorden) > 0) {
+        if ($this->Model_emp->Numarchivosxorden($idorden) > 0) {
  
-            $this->BorrarArchConSeg($idorden);
-            //$this->CreaZip($idorden);
-            //No pasa de aqui
-            //$this->BorraArchivosOrden($idorden);
-        }*/
+            $this->BorraArchivosOrden($idorden);
+        }
 
         $this->pdf->ExportaPdf($orden);
-        //$this->Model_emp->BorraOrden($idorden);
+        $this->Model_emp->BorraOrden($idorden);
+        redirect('/Cont_empresa/VerEmpresa', 'location', 301);
     }
     
-    public function BorrarArchConSeg() {
+    /**
+     * LLama a la vista que te pide que confirmes si quieres borrar esos archivos
+     */
+    public function BorrarArchConSeg($idorden) {
         $this->CargaPlantilla(
                 $this->load->view('seg_borrararchivos', array(
-                    'idorden' => $_POST['q']
-                        ), TRUE), "¿Estas seguro de borrar los archivos de esa orden?");
+                    'idorden' => $idorden
+                        ), TRUE), "Descargados los archivos de esta orden.<br><br>"
+                . "¿Estas seguro de borrar dichos archivos ,asi como la propia orden del sistema?");
     }
    
     /**
@@ -428,8 +445,7 @@ class Cont_empresa extends CI_Controller {
      * @param type $idorden
      * @return type
      */
-    public function CreaZip() {
-        $idorden=$_POST['q'];
+    public function CreaZip($idorden) {
         
         $archivos = $this->Model_emp->ArchivosXOrden($idorden);
         

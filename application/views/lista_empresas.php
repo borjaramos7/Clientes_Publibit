@@ -14,7 +14,7 @@
                 </td>
                 <td>
                     <img src="<?=base_url().'asset/'?>img/negocios-1.png"><br>
-                        <?php echo anchor("Cont_empresa/VerEmpresa/".'pendientes',"Ordenes <br> Pendientes");?>
+                        <?php echo anchor("Cont_empresa/VerEmpresa/".'S',"Ordenes <br> Pendientes");?>
                 </td>
             </tr>
         <?php foreach ($listacli as $cliente) :?>

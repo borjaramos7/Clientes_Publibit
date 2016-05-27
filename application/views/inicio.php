@@ -8,7 +8,7 @@
             </ol>
             <div class="carousel-inner">
                 <div class="item active">
-                    <img class="slide-image" src="http://placehold.it/1200x680" alt="">
+                    <img class="slide-image" src="<?php echo site_url('img/pantalla-ayamonte.jpg') ?>" alt="">
                 </div>
                 <div class="item">
                     <img class="slide-image" src="http://placehold.it/1200x680" alt="">
@@ -25,7 +25,7 @@
             </a>
         </div>
     </div>
-</div-->
+</div>
 
 <!--div class="row" style="text-align:right">
     <div class="col-sm-6 col-lg-6 col-md-8" style="text-align:left">

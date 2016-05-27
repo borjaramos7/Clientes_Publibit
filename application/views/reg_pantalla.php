@@ -7,7 +7,7 @@
                 </div>
             <?php endif; ?>
             <div id="cuerpo">
-                <form style="border:solid 3px orange; margin-right: 380px; margin-left: 2px" action="" method="post" >
+                <form style="border:solid 3px orange; margin-right: 60%; margin-left: 2px" action="" method="post" >
                     
                     <div style="margin-left:30px; padding:3px,3px,3px,3px;">
                         
@@ -33,6 +33,6 @@
                 </form>
            
         </div>
- 
+      </div>          
     </div>
 

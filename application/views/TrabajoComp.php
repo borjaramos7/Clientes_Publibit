@@ -23,7 +23,8 @@
             <?php echo anchor("Cont_empresa/ListaArchivos/{$orden['idtrabajo']}", "Ver archivos"); ?></a>
     </div>
     <div class="col-md-4" style="text-align:center">
-        <button onclick="MultiplesTareas()" id="borrar">Borrar orden</button>
+        <button id="btnTareas" style="text-align:center" 
+                class="btn btn-danger list-group-item" id="borrar">Borrar orden</button>
          <!--a id="borrar" class="btn-warning list-group-item" 
             <?php echo anchor("Cont_empresa/BorrarArchConSeg/{$orden['idtrabajo']}", "Borrar Orden"); ?></a-->
     </div>
@@ -39,3 +40,12 @@
          <?php endif; ?>
 </fieldset>
 
+<script language="javascript">
+  $("#btnTareas").click(function() {
+      <?php if ($this->Model_emp->Numarchivosxorden($orden['idtrabajo']) > 0) : ?>
+        window.open("<?=site_url('cont_empresa/CreaZip/'.$orden['idtrabajo'])?>");
+     <?php endif;?>
+     location.href="<?=site_url('cont_empresa/BorrarArchConSeg/'.$orden['idtrabajo'])?>";
+     
+  });  
+</script>

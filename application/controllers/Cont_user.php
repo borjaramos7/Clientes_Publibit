@@ -93,19 +93,11 @@ class Cont_user extends CI_Controller {
      */
     public function VerificaLogin() {
         $contr_login = md5($this->input->post('cont'));
-        $existe = $this->Model_us->CompUser(
+        $existe = $this->Model_us->Login(
                 $this->input->post('user'), $contr_login
         );
 
         if ($existe) {
-            $newdata = array(
-                'username' => $this->input->post('user'),
-                'logged_in' => TRUE,
-                'id' => $this->Model_us->SacaIdUser($this->input->post('user')),
-                'correo' => $this->Model_us->SacaEmailUser($this->input->post('user'))
-            );
-            $this->session->set_userdata($newdata);
-
             redirect('Cont_user/IrInicio', 'location', 301);
         } else
             $this->Login("Usuario o contraseña incorrectos");
@@ -115,6 +107,7 @@ class Cont_user extends CI_Controller {
      * Destruye la sesion
      */
     public function LogOut() {
+        $this->Model_us->Logout();
         $this->session->sess_destroy();
         redirect('', 'location', 301);
     }
