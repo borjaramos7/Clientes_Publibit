@@ -83,13 +83,22 @@
             <div class="collapse navbar-collapse pull-right" id="bs-example-navbar-collapse-1">
                 <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
-                    <?php echo $this->session->userdata('username');?>
+                    <i class="fa fa-user fa-lg" aria-hidden="true"></i>&nbsp<?php echo $this->session->userdata('username');?>
                 <span class="caret"></span></button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                  <li role="presentation"><?php echo anchor("Cont_user/LogOut","Logout");?></li>
-                  <li role="presentation"><?php echo anchor("Cont_user/DarBajausuario","Dar de baja") ;?></li>
+                  <li role="presentation">
+                      <a href="<?= site_url('Cont_user/LogOut')?>">
+                          <i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>&nbsp Logout
+                  </li>
+                  <li role="presentation">
+                      <a href="<?= site_url('Cont_user/DarBajausuario')?>">
+                          <i class="fa fa-user-times fa-lg" aria-hidden="true"></i>&nbsp Dar de baja
+                  </li>
                   <li role="presentation" class="divider"></li>
-                  <li role="presentation"><?php echo anchor("Cont_user/CargaDatosUs","Modificar Datos") ;?></li>
+                  <li role="presentation">
+                      <a href="<?= site_url('Cont_user/CargaDatosUs')?>">
+                      <i class="fa fa-edit fa-lg" aria-hidden="true"></i>&nbsp Modificar Datos</a>
+                  </li>
                 </ul>
               </div>
             <?php endif; ?>
@@ -106,34 +115,43 @@
 
     <!-- Page Content -->
     <div style="margin-top: 3%" class="container">
-        
         <div class="col-md-2">
             <div class="row">
 
-                <div id="botones" style="text-align: center;" class="col-md-12">
+                <div id="botones" style="text-align: left;" class="col-md-12">
                     <?php if ($this->session->userdata('username')!=null) :?>
                     <b><div class="list-group">
-                            <?php echo anchor("Cont_empresa/AddEmpresa","Añadir cliente",
-                                    'style="background-color: orange" class="list-group-item"');?>
-                    </div>
+                        <a href="<?= site_url('Cont_empresa/AddEmpresa')?>" 
+                           style="background-color: orange" class="list-group-item" title="Añadir cliente">
+                            <i class="fa fa-user-plus fa-lg" aria-hidden="true"></i>&nbsp;Añadir cliente</a>
+                        </div>
                     <br>
                     <div class="list-group">
-                            <?php echo anchor("Cont_empresa/VerEmpresa","Ver clientes",
-                                    'style="background-color: orange" class="list-group-item"');?>
+                        <a href="<?= site_url('Cont_empresa/VerEmpresa')?>" 
+                           style="background-color: orange" class="list-group-item" title="Ver clientes">
+                            <i class="fa fa-group fa-lg" aria-hidden="true"></i>&nbsp;Ver clientes</a>
+                            
+                            <a href="<?= site_url('Cont_empresa/VerOrdenesPend')?>" 
+                           style="background-color: orange ;font-size: 11px;" class="list-group-item" title="Ordenes pendientes">
+                            <i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>&nbsp;Ordenes pendientes</a>
 
-                            <?php echo anchor("Cont_empresa/VerOrdenesPend","Ordenes pendientes",
-                                    'style="background-color: orange;font-size: 12px;" class="list-group-item" ');?>
-                        
-                    <hr style="color: orange" size="1"/>
-                    
-                            <?php echo anchor("Cont_spot/AddPantalla","Añadir Pantalla",
-                                    'style="background-color: buttonface" class="list-group-item" ');?>
-                    
-                            <?php echo anchor("Cont_spot/VerPantallas","Ver pantallas",
-                                    'style="background-color: buttonface" class="list-group-item" ');?>
-                    <br>    
-                            <?php echo anchor("Cont_spot/VerSpotsActivos","Spots Activos",
-                                    'style="background-color: buttonface" class="list-group-item"');?>
+                    <hr size="2"/>
+                            
+                            <a href="<?= site_url('Cont_spot/AddPantalla')?>" 
+                           style="background-color: activecaption; font-size:12px;" class="list-group-item" title="Añadir pantalla">
+                            <i class="fa fa-tv fa-lg" aria-hidden="true"></i>
+                                <i class="fa fa-plus fa-lg" aria-hidden="true"></i>&nbsp;Añadir Pantalla</a>
+                            
+                            <a href="<?= site_url('Cont_spot/VerPantallas')?>" 
+                           style="background-color: activecaption;" class="list-group-item" title="Ver Pantallas">
+                            <i class="fa fa-tv fa-lg" aria-hidden="true"></i>
+                                &nbsp;Ver Pantallas</a>
+                    <br>  
+                    <a href="<?= site_url('Cont_spot/VerSpotsActivos')?>" 
+                           style="background-color: activecaption;" class="list-group-item" title="Spots activos">
+                            <i class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
+                                &nbsp;Spots activos</a>
+                      
                     </div>
                     </b>
                     <?php endif; ?>
@@ -145,7 +163,7 @@
                     <?php if ($encabezado == "Empresas asociadas"): ?>
                         <div class="col-lg-6">
                             <div class="input-group">
-                                <legend>Buscar por nombre</legend>
+                                <legend><i class="fa fa-search fa-lg" aria-hidden="true"></i>&nbspBuscar por nombre</legend>
                                 <input type="text" class="form-control" id="bus" name="bus" onkeyup="buscador()"/>
                             </div>
                         </div>
@@ -167,6 +185,7 @@
                     </div>
                 </div>
             </div>
+        <?php if ($this->session->userdata('username')!=null) :?>
         <form action=<?= site_url("Cont_empresa/BuscaOrd")?> method="post">
             <div class="col-md-2"><h4>Busca ordenes por denominacion</h4>
                 <div class="input-group">
@@ -177,6 +196,7 @@
                 </div>
               </div>
         </form>
+        <?php endif; ?>
     </div>
     <!-- /.container -->
 

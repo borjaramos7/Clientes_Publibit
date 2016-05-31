@@ -147,6 +147,7 @@ class Cont_spot extends CI_Controller {
      */
     public function BorraPantalla($idpant) {
         $this->Model_spot->BorraPant($idpant);
+        redirect('/Cont_Spot/VerPantallas/');
     }
     
     /**

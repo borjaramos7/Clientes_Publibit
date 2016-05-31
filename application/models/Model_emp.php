@@ -33,7 +33,6 @@ class Model_emp extends CI_Model {
     }
     
     public function ListaEmpXPend($limit, $start) {//Where para mostrar solo pendientes
-        //$this->db->limit($limit,$start);
         $query = "select * from cliente where idcliente in "
                 . "(select _idcliente from trabajo where idtrabajo in ("
                 . "select idtrabajo from trabajo where estado='pendiente' group by _idcliente))"
@@ -255,7 +254,18 @@ class Model_emp extends CI_Model {
         $total = $this->db->query($query);
         return $total->row()->total;
     }
-
+    /**
+     * Funcion que calcula el total de empresas que tienen alguna orden pendiente
+     * @return type
+     */
+    public function TotalPendientes() {
+        $query = "select count(*) as 'total' from cliente where idcliente in"
+                    . "(select _idcliente from trabajo where "
+                        . "(select count(*) as 'totalpen' from trabajo where estado='pendiente')>0) group by 'total'";
+        $total = $this->db->query($query);
+        return $total->row()->total;
+    }
+    
     /**
      * Recibe un conjunto de caracteres que sera los que busque en la el campo "nomempresa" para devolver las 
      * filas que coincidan

@@ -36,14 +36,19 @@ class Cont_empresa extends CI_Controller {
             redirect('/Cont_empresa/VerEmpresa', 'location', 301);
         }
     }
-
+    
+    public function Ordenar(){
+        $this->VerEmpresa("S");
+    }
+    
     /**
      * Funcion que llama a una vista que lista las empresas ya sea a todas si no se ha buscado ningun caracter o
      * un conjunto de empresas que coincidan con los parametros, si en el buscador existe algun dato
      */
     public function VerEmpresa($ordenado='N',$desde=0) {
         $_SESSION['estado']['ordenado']=$ordenado;
-            $datospag = $this->PaginacionEmp($ordenado, $desde);
+            $datospag = $this->PaginacionEmp($desde);
+            //echo "<pre>".print_r($datospag)."</pre>";
             $this->CargaPlantilla(
                     $this->load->view('lista_empresas', array(
                         'listacli' => $datospag['lista'],
@@ -55,9 +60,8 @@ class Cont_empresa extends CI_Controller {
      * Funcion para el buscador que funciona con AJAX
      */
     public function BuscaAjax() {
-        //$q = $_POST['q'];
         $_SESSION['estado']['buscador']=$_POST['q'];
-            $listabus = $this->Model_emp->Buscador($_SESSION['estado']['buscador']);
+            $listabus = $this->Model_emp->Buscador($_SESSION['estado']['buscador']);//PaginacionEmp($ordenado, $desde);
             $cuerpo = $this->load->view('lista_empresas', array(
                 'listacli' => $listabus));
     }
@@ -75,15 +79,14 @@ class Cont_empresa extends CI_Controller {
      * Paginacion para empresas
      * @return type
      */
-    public function PaginacionEmp($ordenado, $desde) {
+    public function PaginacionEmp($desde) {
         $opciones = array();
         //$desde = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-
         $opciones['per_page'] = 4;
-        $opciones['base_url'] = site_url('Cont_empresa/VerEmpresa/'.$ordenado);
+        $opciones['base_url'] = site_url('Cont_empresa/VerEmpresa/'.$_SESSION['estado']['ordenado']);
         
-        if ($ordenado!='S'){$opciones['total_rows'] = $this->Model_emp->TotalClientes();}
-        else {$opciones['total_rows']=count($this->Model_emp->ListaEmpXpend($opciones['per_page'], $desde));}
+        if ($_SESSION['estado']['ordenado']!='S'){$opciones['total_rows'] = $this->Model_emp->TotalClientes();}
+        else {$opciones['total_rows']=$this->Model_emp->TotalPendientes();}
         
         $opciones['full_tag_open'] = '<ul class="pagination">';
         $opciones['full_tag_close'] = '</ul>';
@@ -106,17 +109,21 @@ class Cont_empresa extends CI_Controller {
         //$opciones['uri_segment'] = 3;
 
         $this->pagination->initialize($opciones);
-       
-        if ($ordenado == 'S') {
-            
+        if ($_SESSION['estado']['ordenado'] == 'S') {
             $datapend['lista'] = $this->Model_emp->ListaEmpXpend($opciones['per_page'], $desde);
             $datapend['paginacion'] = $this->pagination->create_links();
             return $datapend;
-        } else {
+        } else if ($_SESSION['estado']['ordenado']=='N'){
+            
             $data['lista'] = $this->Model_emp->ListaEmp($opciones['per_page'], $desde);
             $data['paginacion'] = $this->pagination->create_links();
             return $data;
         }
+        /*else if ($ordenado=='B'){
+            $databus['lista'] = $this->Model_emp->Buscador($_SESSION['estado']['buscador']);
+            $databus['paginacion'] = $this->pagination->create_links();
+            return $databus;
+        }*/
     }
 
     /**
@@ -407,7 +414,7 @@ class Cont_empresa extends CI_Controller {
 
         $this->pdf->ExportaPdf($orden);
         $this->Model_emp->BorraOrden($idorden);
-        redirect('/Cont_empresa/VerEmpresa', 'location', 301);
+        redirect('/Cont_empresa/VerOrdenComp{'.$idorden.'}', 'location', 301);
     }
     
     /**

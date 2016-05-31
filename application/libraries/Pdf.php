@@ -34,9 +34,10 @@ class Pdf extends FPDF {
                 $pdf->Ln();$pdf->Ln();
                 $pdf->Cell(70,7,"Fecha inicio: ".$orden['fecha_inicio'],0);
                 $pdf->Ln();$pdf->Ln();
-                /*$pdf->writeHTML("<hr size='8px' color='black' />");
-                $pdf->writeHTML("<pre> Denominación <br>".$orden['denominacion']."</pre><br>");
-                $pdf->writeHTML("<pre> Descripción <br>".$orden['descripcion']."</pre>");*/
+                /*$pdf->writeHTML("<hr size='8px' color='black' />");*/
+                $pdf->Write(7,"Denominacion: ".$orden['denominacion']);
+                $pdf->Ln();$pdf->Ln();
+                $pdf->Write(7,"Descripcion: ".$orden['descripcion']);
 
                 //$pdf->Output();
                 $pdf->Output($orden['nomempresa'].'_'.$orden['idtrabajo'].'.pdf','D');

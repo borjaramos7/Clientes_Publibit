@@ -14,7 +14,7 @@
                 </td>
                 <td>
                     <img src="<?=base_url().'asset/'?>img/negocios-1.png"><br>
-                        <?php echo anchor("Cont_empresa/VerEmpresa/".'S',"Ordenes <br> Pendientes");?>
+                        <?php echo anchor("Cont_empresa/Ordenar","Ordenes <br> Pendientes");?>
                 </td>
             </tr>
         <?php foreach ($listacli as $cliente) :?>
@@ -25,8 +25,21 @@
                 <td><?= $cliente['cif'] ?></td>
                 <td><?= $this->Model_emp->NumPendientes($cliente['idcliente'])?></td>
                 <td>
-                    <a class="btn btn-warning"<?php echo anchor("Cont_empresa/VerEmpresaComp/{$cliente['idcliente']}","Ver empresa");?>
-                    </a>
+                    <div class="list-group">
+                        <a href="<?= site_url("Cont_empresa/VerEmpresaComp/{$cliente['idcliente']}")?>" 
+                           class="btn btn-warning" title="Ver Empresa">
+                            <i class="fa fa-briefcase fa-lg" aria-hidden="true"></i>&nbsp;Ver Cliente</a>
+                        </div>
+                    
+                    <!--a class="btn btn-warning"<?php echo anchor("Cont_empresa/VerEmpresaComp/{$cliente['idcliente']}","Ver empresa");?>
+                    </a-->
+                </td>
+                <td>
+                <div class="list-group">
+                        <a href="<?= site_url("Cont_empresa/BorraEmpresa/{$cliente['idcliente']}")?>" 
+                           class="btn btn-danger" title="Eliminar empresa">
+                            <i class="fa fa-remove fa-lg" aria-hidden="true"></i></a>
+                        </div>
                 </td>
             </tr>   
     <?php endforeach; ?>

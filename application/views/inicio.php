@@ -8,13 +8,13 @@
             </ol>
             <div class="carousel-inner">
                 <div class="item active">
-                    <img class="slide-image" src="<?php echo site_url('img/pantalla-ayamonte.jpg') ?>" alt="">
+                    <img class="slide-image" src="<?php echo base_url('asset/img/pantalla-ayamonte.jpg') ?>" alt="">
                 </div>
                 <div class="item">
-                    <img class="slide-image" src="http://placehold.it/1200x680" alt="">
+                    <img class="slide-image" src="<?php echo base_url('asset/img/pantalla-punta.jpg') ?>" alt="">
                 </div>
                 <div class="item">
-                    <img class="slide-image" src="http://placehold.it/1200x680" alt="">
+                    <img class="slide-image" src="<?php echo base_url('asset/img/huelva2.jpg') ?>" alt="">
                 </div>
             </div>
             <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">

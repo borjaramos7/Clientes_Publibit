@@ -2,6 +2,8 @@ function buscador(){
 
     var n = document.getElementById('bus').value;
     //document.getElementById("myDiv").innerHTML =n;
+    if  (n.length>1)
+    {
     xmlhttp = new XMLHttpRequest();
 
     xmlhttp.onreadystatechange = function ()
@@ -11,23 +13,10 @@ function buscador(){
             document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
         }
     };
-     /*$.ajax({
-                data:  q=n,
-                url:   '../../asset/js/proc.php',
-                type:  'post',
-                contentType: "application/x-www-form-urlencoded",
-                beforeSend: function () {
-                        $("#resultado").html("Procesando, espere por favor...");
-                },
-                success:  function (response) {
-                        $("#resultado").html(response);
-                }
-        });*/
-    
-    
-    
-    /* ruta absoluta */xmlhttp.open("POST","BuscaAjax",true);
+
+    xmlhttp.open("POST","http://localhost/Clientes_publibit/index.php/Cont_empresa/BuscaAjax",true);
     xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
     xmlhttp.send("q="+n);
+}
 }
     
