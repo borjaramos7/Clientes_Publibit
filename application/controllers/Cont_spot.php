@@ -105,7 +105,21 @@ class Cont_spot extends CI_Controller {
         $this->form_validation->set_message('numeric', 'El campo %s tiene que tener un valor numerico');
         $this->form_validation->set_message('required', 'El campo %s no puede estar vacio');
     }
-
+    
+    public function SpotsAcabandose() {
+        $listaspot=$this->Model_spot->SpotsFinalizando();     
+        foreach ($listaspot as $clave=>$spot) {
+            $listaspot[$clave]['locpant']=$this->Model_spot->PantallasDeSpotFin($spot['idspot']);
+            $listaspot[$clave]['nomcli']= $this->Model_emp->SacaNombreCliente($spot['_idcliente']);
+        }
+        $this->CargaPlantilla($this->load->view('Avisos', array(
+                    'listaspot' => $listaspot
+                        ), TRUE), "Avisos de spots que finalizan en menos de 10 dias");
+        /*echo "<pre>";
+        echo print_r($listaspot);
+        echo "</pre>";*/
+    }
+    
     /**
      * Recoge los datos del formulario y se los pasa al modelo para que los inserte
      */

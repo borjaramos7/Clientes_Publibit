@@ -124,7 +124,7 @@ class Model_spot extends CI_Model {
      * @return type
      */
     public function PantallasDeSpot($idspot) {
-        $query = "select localidad,direccion from pantalla where idpantalla in "
+        $query = "select * from pantalla where idpantalla in "
                 . "(select _idpantalla from spotxpantalla where _idspot='" . $idspot . "')";
         $pantalla = $this->db->query($query);
         return $pantalla->result_array();
@@ -141,5 +141,31 @@ class Model_spot extends CI_Model {
         $spots = $this->db->query($query);
         return $spots->result_array();
     }
-
+    
+    public function Asociacion ($idspot,$idpantalla) {
+        $query = "select * from spotxpantalla where _idspot=".$idspot." and _idpantalla=".$idpantalla;
+        $asoc=$this->db->query($query);
+        return $asoc->row_array();
+    }
+    
+    public function HayAvisos(){
+        $query = "select count(*) as 'total' from spotxpantalla where fechafin-curdate()<10";
+        $numavisos = $this->db->query($query);
+        return $numavisos->row()->total;
+    }
+    
+    public function SpotsFinalizando(){
+        $query = "select * from spot where idspot in ( "
+                . "select _idspot from spotxpantalla where fechafin-curdate()<10 order by fechafin desc)";
+        $spotsfin = $this->db->query($query);
+        return $spotsfin->result_array();
+    }
+    
+    public function PantallasDeSpotFin($idspot) {
+        $query = "select localidad from pantalla where idpantalla in "
+                . "(select _idpantalla from spotxpantalla s where _idspot=" . $idspot . " and fechafin-curdate()<10)";
+        $pantalla = $this->db->query($query);
+        return $pantalla->result_array();
+    }
+    
 }

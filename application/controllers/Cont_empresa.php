@@ -462,5 +462,9 @@ class Cont_empresa extends CI_Controller {
         $this->zip->download("ficheros_orden_".$idorden."_.zip");
 
     }
+    
+    /*public function BorraEmpresa($idcli) {
+        
+    }*/
 
 }
