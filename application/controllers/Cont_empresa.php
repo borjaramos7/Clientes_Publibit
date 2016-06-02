@@ -113,7 +113,7 @@ class Cont_empresa extends CI_Controller {
             $datapend['lista'] = $this->Model_emp->ListaEmpXpend($opciones['per_page'], $desde);
             $datapend['paginacion'] = $this->pagination->create_links();
             return $datapend;
-        } else if ($_SESSION['estado']['ordenado']=='N'){
+        } else /*if ($_SESSION['estado']['ordenado']=='N')*/{
             
             $data['lista'] = $this->Model_emp->ListaEmp($opciones['per_page'], $desde);
             $data['paginacion'] = $this->pagination->create_links();
@@ -255,7 +255,9 @@ class Cont_empresa extends CI_Controller {
         $this->Model_emp->EndOrden($idorden);
         redirect('/Cont_empresa/VerOrdenesPend/', 'location', 301);
     }
-    
+    /**
+     * Funcion que recoge por POST un texto y busca ese texto en el campo denominacion de las ordenes
+     */
     public function BuscaOrd() {
         $listaordenes=$this->Model_emp->BuscaPorDen($this->input->post('buscaordenes'));
         //echo "<pre>".print_r($listaordenes)."</pre>";

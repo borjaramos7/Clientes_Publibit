@@ -154,7 +154,7 @@
                     <br>
                     <?php if ($this->Model_spot->HayAvisos()>1):?>
                     <a href="<?= site_url('Cont_spot/SpotsAcabandose')?>"
-                           style="background-color: red; color:black;text-align: center" class="list-group-item" title="Spots activos">
+                           style="background-color: red; color:black;text-align: center" class="list-group-item" title="Avisos">
                             <i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>
                                 &nbsp;Avisos&nbsp;<i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i></a>
                     <?php endif; ?>  

@@ -19,5 +19,4 @@
                         <img src="<?=base_url()."/asset/img/icon.png"?>"/></a>
             </div>
         </div>
-        <br><br>
 <?php endforeach; ?>
