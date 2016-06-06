@@ -299,7 +299,8 @@ class Cont_empresa extends CI_Controller {
         $archivosxorden = $this->Model_emp->ArchivosXOrden($idorden);
         $this->CargaPlantilla(
                 $this->load->view('listaarch', array(
-                    'archivos' => $archivosxorden
+                    'archivos' => $archivosxorden,
+                    'idorden' => $idorden
                         ), TRUE), "Archivos disponibles para este trabajo");
     }
 
@@ -312,7 +313,7 @@ class Cont_empresa extends CI_Controller {
         $target_path = "C:\\xampp\htdocs\Clientes_Publibit\archivos\\";
         //$target_path='archivos/';Para cuando este en el servidor
         if ($numarch == 0)
-            $target_path = $target_path . basename($_FILES['uploadedfile']['name']);
+        {$target_path = $target_path . basename($_FILES['uploadedfile']['name']);}
         else {
             $target_path = $target_path . "(" . $numarch . ")" . basename($_FILES['uploadedfile']['name']);
             $nombrear = "(" . $numarch . ")" . $_FILES['uploadedfile']['name'];
@@ -351,9 +352,9 @@ class Cont_empresa extends CI_Controller {
     public function checkDateFormat($date) {
         if (preg_match("/[0-31]{2}\/[0-12]{2}\/[0-9]{4}/", $date)) {
             if (checkdate(substr($date, 3, 2), substr($date, 0, 2), substr($date, 6, 4)))
-                return true;
+            {return true;}
             else
-                return false;
+            {return false;}
         } else {
             return false;
         }
@@ -398,7 +399,7 @@ class Cont_empresa extends CI_Controller {
         if ($existecif) {
             return false;
         } else
-            return true;
+        {return true;}
     }
 
     /**
@@ -407,28 +408,34 @@ class Cont_empresa extends CI_Controller {
      */
     public function BorrarOrden($idorden) {
 
-        $orden = $this->Model_emp->SacaOrden($idorden);
-        $orden['nomempresa'] = $this->Model_emp->SacaNombreCliente($orden['_idcliente']);
         if ($this->Model_emp->Numarchivosxorden($idorden) > 0) {
  
             $this->BorraArchivosOrden($idorden);
         }
-
-        $this->pdf->ExportaPdf($orden);
+        $this->ExportaOrden($idorden);
         $this->Model_emp->BorraOrden($idorden);
-        redirect('/Cont_empresa/VerOrdenComp{'.$idorden.'}', 'location', 301);
+        //redirect('/Cont_empresa/VerOrdenComp{'.$idorden.'}', 'location', 301);
+    }
+    /**
+     * Recibe la id de una orden y saca todos sus datos para mandarselo a la libreria pdf para que se encargue de exportarlo
+     * @param type $idorden
+     */
+    public function ExportaOrden($idorden) {
+        $orden = $this->Model_emp->SacaOrden($idorden);
+        $orden['nomempresa'] = $this->Model_emp->SacaNombreCliente($orden['_idcliente']);
+        $this->pdf->ExportaPdf($orden);
     }
     
     /**
      * LLama a la vista que te pide que confirmes si quieres borrar esos archivos
-     */
+     
     public function BorrarArchConSeg($idorden) {
         $this->CargaPlantilla(
                 $this->load->view('seg_borrararchivos', array(
                     'idorden' => $idorden
                         ), TRUE), "Descargados los archivos de esta orden.<br><br>"
                 . "¿Estas seguro de borrar dichos archivos ,asi como la propia orden del sistema?");
-    }
+    }*/
    
     /**
      * Recibe una id de una orden y elimina los archivos que tenga dicha orden asi como su existencia en la bbdd
@@ -465,8 +472,27 @@ class Cont_empresa extends CI_Controller {
 
     }
     
-    /*public function BorraEmpresa($idcli) {
+    /**
+     * Recibe la id de un cliente y borra los spot y trabajos asociados a esta empresa asi como dicha empresa de 
+     * la bbdd.
+     * @param type $idcli
+     */
+    public function BorraEmpresa($idcli) {
         
-    }*/
+        $listaspot = $this->Model_spot->SpotsXEmp($idcli);
+        foreach ($listaspot as $spot) {
+           $this->Model_spot->BorrarSpot($spot['idspot']); 
+        }
+        
+        $listatrab = $this->Model_emp->TrabajosXEmp($idcli);
+        foreach ($listatrab as $trabajo) {
+          $this->BorrarOrden($trabajo['idtrabajo']); 
+        }
+        
+        $this->Model_emp->BorraEmpresa($idcli);
+        redirect('/Cont_empresa/VerEmpresa', 'location', 301);
+        
+ 
+    }
 
 }

@@ -17,7 +17,14 @@ class Model_spot extends CI_Model {
     public function AltaSpot($newspot) {
         $this->db->insert('spot', $newspot);
     }
-
+    
+    public function BorrarSpot($idspot){
+        $query = "delete from spotxpantalla where _idspot=" . $idspot;
+        $this->db->query($query);
+        $query = "delete from spot where idspot=" . $idspot;
+        $this->db->query($query);
+    }
+    
     /**
      * recibe la id de un cliente y devuelve el numero de spots que tiene contratados
      * @param type $idcli

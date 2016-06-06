@@ -82,7 +82,16 @@ class Cont_spot extends CI_Controller {
             redirect('/Cont_Spot/VerSpotComp/' . $this->input->post('idspot'), 'location', 301);
         }
     }
-
+    
+    /**
+     * Recibe la id de un spot y llama al modelo para borrar dicho spots.
+     * @param type $idspot
+     */
+    public function BorrarSpot($idspot) {
+           $this->Model_spot->BorrarSpot($idspot);
+           redirect('/Cont_Spot/VerSpotsActivos');
+    }
+    
     /**
      * Funcion que recibe una id de un spot y saca todos sus datos para mandarselos a una vista que los muestra en detalle
      * @param type $idspot
@@ -105,7 +114,9 @@ class Cont_spot extends CI_Controller {
         $this->form_validation->set_message('numeric', 'El campo %s tiene que tener un valor numerico');
         $this->form_validation->set_message('required', 'El campo %s no puede estar vacio');
     }
-    
+    /**
+     * Saca un array con los spots que estan finalizando y los manda a una vista
+     */
     public function SpotsAcabandose() {
         $listaspot=$this->Model_spot->SpotsFinalizando();     
         foreach ($listaspot as $clave=>$spot) {

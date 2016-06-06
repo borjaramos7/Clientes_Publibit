@@ -51,7 +51,12 @@ class Model_emp extends CI_Model {
         $numpend = $this->db->query($query);
         return $numpend->row()->total;
     }
-
+    
+    public function BorraEmpresa($idcli) {
+        $query = "delete from cliente where idcliente='" . $idcli . "'";
+        $this->db->query($query);
+    }
+    
     /**
      * Recibe la id de una empresa y devuelve el total de trabajos que tiene esa empresa, ya sea finalizados o pendientes
      * @param type $idcli
@@ -286,5 +291,5 @@ class Model_emp extends CI_Model {
         $query = "delete from trabajo where idtrabajo=" . $idorden;
         $this->db->query($query);
     }
-
+    
 }

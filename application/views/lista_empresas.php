@@ -30,21 +30,12 @@
                            class="btn btn-warning" title="Ver Empresa">
                             <i class="fa fa-briefcase fa-lg" aria-hidden="true"></i>&nbsp;Ver Cliente</a>
                         </div>
-                    
-                    <!--a class="btn btn-warning"<?php echo anchor("Cont_empresa/VerEmpresaComp/{$cliente['idcliente']}","Ver empresa");?>
-                    </a-->
-                </td>
-                <td>
-                <div class="list-group">
-                        <a href="<?= site_url("Cont_empresa/BorraEmpresa/{$cliente['idcliente']}")?>" 
-                           class="btn btn-danger" title="Eliminar empresa">
-                            <i class="fa fa-remove fa-lg" aria-hidden="true"></i></a>
-                        </div>
                 </td>
             </tr>   
     <?php endforeach; ?>
     </table>
 <div style="text-align: center" class="paginacion"><?php echo @$paginacion ?></div>
+
                     
 
         

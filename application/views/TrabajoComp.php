@@ -27,7 +27,7 @@
         </div>
 
     <div class="col-md-3" style="text-align:left">
-        <button id="btnTareas" style="text-align:left" 
+        <button style="text-align:left" data-toggle="modal" data-target="#modal_seg"
                 class="btn btn-danger list-group-item" id="borrar">
             <img src="<?=base_url()."/asset/img/borrar.png"?>"/>Borrar orden</button>
     </div>
@@ -43,15 +43,32 @@
                                class="btn-warning list-group-item" title="Modificar orden">
                 <img src="<?=base_url()."/asset/img/edit.png"?>"/>&nbsp;Modificar orden</a>
             </div>
-         <?php endif; ?>
+        <?php endif; ?>
 </fieldset>
+
+<div class="modal fade" id="modal_seg" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button><br>
+                    <h4 class="modal-title">Descargados los archivos de esta orden.<br><br>
+                ¿Estas seguro de borrar dichos archivos ,asi como la propia orden del sistema?</h4>
+                </div>
+
+                <div class="modal-footer">
+                    <button id="btnTareas" class="btn btn-danger" 
+                            data-dismiss="modal" style="color: white">Si,estoy seguro.</button>
+                    <button type="button" class="btn btn-info" data-dismiss="modal" style="color: white">No,mejor no.</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <script language="javascript">
   $("#btnTareas").click(function() {
       <?php if ($this->Model_emp->Numarchivosxorden($orden['idtrabajo']) > 0) : ?>
         window.open("<?=site_url('cont_empresa/CreaZip/'.$orden['idtrabajo'])?>");
      <?php endif;?>
-     location.href="<?=site_url('cont_empresa/BorrarArchConSeg/'.$orden['idtrabajo'])?>";
-     
+     location.href="<?=site_url('cont_empresa/BorrarOrden/'.$orden['idtrabajo'])?>";
   });  
 </script>

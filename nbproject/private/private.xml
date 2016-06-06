@@ -3,22 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/views/avisos.php</file>
-            <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/views/lista_empresas.php</file>
-            <file>file:/C:/xampp/htdocs/Clientes_Publibit/asset/js/ajax.js</file>
-            <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/views/pantallas.php</file>
-            <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/views/Mod_user.php</file>
-            <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/views/seg_borrararchivos.php</file>
-            <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/views/vista_principal.php</file>
-            <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/models/Model_emp.php</file>
-            <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/views/TrabajoComp.php</file>
             <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/controllers/Cont_spot.php</file>
+            <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/views/lista_empresas.php</file>
             <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/controllers/Cont_empresa.php</file>
+            <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/views/pantallas.php</file>
             <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/views/trabajos.php</file>
+            <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/views/listaarch.php</file>
             <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/models/Model_spot.php</file>
-            <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/views/spots.php</file>
-            <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/views/EmpresaComp.php</file>
+            <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/models/Model_emp.php</file>
+            <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/views/vista_principal.php</file>
             <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/views/SpotComp.php</file>
+            <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/views/EmpresaComp.php</file>
+            <file>file:/C:/xampp/htdocs/Clientes_Publibit/application/views/TrabajoComp.php</file>
         </group>
     </open-files>
 </project-private>

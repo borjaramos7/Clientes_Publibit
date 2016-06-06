@@ -22,7 +22,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button><br>
-                    <h4 class="modal-title">Fechas de spot <?=$spot['idspot']?> <br> <?php echo $pantalla['localidad'] . " - " . $pantalla['direccion'];?></h4>
+                    <h4 class="modal-title">Fechas de spot <?=$spot['idspot']?> <br> 
+                        <?php echo $pantalla['localidad'] . " - " . $pantalla['direccion'];?></h4>
                 </div>
                 <div class="modal-body">
                     <br>
@@ -50,5 +51,11 @@
         <a href="<?= site_url("Cont_spot/AsociarConPant/{$spot['idspot']}") ?>" 
            class="btn-warning list-group-item" title="Asociar a pantalla">
             <img src="<?= base_url() . "/asset/img/pantalla.png" ?>"/>&nbsp;Asociar a pantalla</a>
+    </div>
+
+    <div class="col-md-3" style="text-align:left">
+        <a href="<?= site_url("Cont_spot/BorrarSpot/{$spot['idspot']}") ?>" 
+           class="btn-warning list-group-item" title="Borrar Spot">
+            <img src="<?= base_url() . "/asset/img/borrarpant.png" ?>"/>&nbsp;Borrar Spot</a>
     </div>
 </fieldset>

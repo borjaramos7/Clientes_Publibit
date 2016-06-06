@@ -13,8 +13,7 @@
                 <li role="presentation">
                     <a href="<?= site_url("Cont_spot/VerSpotDePant/{$pantalla['idpantalla']}")?>">
                         <img src="<?=base_url()."/asset/img/spot.png"?>"/>&nbsp;Ver spots</a>   
-                    </li>
-                    
+                </li> 
                 <li role="presentation">
                     <a href="<?= site_url("Cont_spot/BorraPantallaSeg/{$pantalla['idpantalla']}")?>">
                         <img src="<?=base_url()."/asset/img/borrarpant.png"?>"/>&nbsp;Borrar pantalla</a> 
