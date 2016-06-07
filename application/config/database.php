@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',//'localhost',
-	'username' => 'root',//'2daw1516_borja'
-	'password' => '',//'setobo%57',
-	'database' => 'gc_publibit',//'2daw1516_borja02',
+	'hostname' => 'localhost',
+	'username' => '2daw1516_borja',//'root'
+	'password' => 'setobo%57',//'',
+	'database' => '2daw1516_borja02',//,'gc_publibit'
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

@@ -79,7 +79,7 @@ class Cont_spot extends CI_Controller {
                 'precio' => $this->input->post('precio'),
                 '_idcliente' => $this->input->post('idemp'));
             $this->Model_spot->ModSpot($datosspot, $this->input->post('idspot'));
-            redirect('/Cont_Spot/VerSpotComp/' . $this->input->post('idspot'), 'location', 301);
+            redirect('/Cont_spot/VerSpotComp/' . $this->input->post('idspot'), 'location', 301);
         }
     }
     
@@ -89,7 +89,7 @@ class Cont_spot extends CI_Controller {
      */
     public function BorrarSpot($idspot) {
            $this->Model_spot->BorrarSpot($idspot);
-           redirect('/Cont_Spot/VerSpotsActivos');
+           redirect('/Cont_spot/VerSpotsActivos');
     }
     
     /**
@@ -123,7 +123,7 @@ class Cont_spot extends CI_Controller {
             $listaspot[$clave]['locpant']=$this->Model_spot->PantallasDeSpotFin($spot['idspot']);
             $listaspot[$clave]['nomcli']= $this->Model_emp->SacaNombreCliente($spot['_idcliente']);
         }
-        $this->CargaPlantilla($this->load->view('Avisos', array(
+        $this->CargaPlantilla($this->load->view('avisos', array(
                     'listaspot' => $listaspot
                         ), TRUE), "Avisos de spots que finalizan en menos de 10 dias");
         /*echo "<pre>";
@@ -150,7 +150,7 @@ class Cont_spot extends CI_Controller {
                 'direccion' => $this->input->post('direccion'),
                 'prov_cod' => $this->input->post('provincia'));
             $this->Model_spot->AddPant($datospant);
-            redirect('/Cont_Spot/VerPantallas/');
+            redirect('/Cont_spot/VerPantallas/');
         }
        
     }
@@ -172,7 +172,7 @@ class Cont_spot extends CI_Controller {
      */
     public function BorraPantalla($idpant) {
         $this->Model_spot->BorraPant($idpant);
-        redirect('/Cont_Spot/VerPantallas/');
+        redirect('/Cont_spot/VerPantallas/');
     }
     
     /**
@@ -197,7 +197,7 @@ class Cont_spot extends CI_Controller {
             'fechafin' => $this->input->post('fechaf'),
             'activo' => "si");
         $this->Model_spot->NuevoSpotXPant($datospotxpant);
-        redirect('/Cont_Spot/VerSpotComp/' . $this->input->post('idspot'), 'location', 301);
+        redirect('/Cont_spot/VerSpotComp/' . $this->input->post('idspot'), 'location', 301);
     }
 
     /**

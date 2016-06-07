@@ -52,7 +52,7 @@ class Model_emp extends CI_Model {
         return $numpend->row()->total;
     }
     
-    public function BorraEmpresa($idcli) {
+    public function DeleteEmpresa($idcli) {
         $query = "delete from cliente where idcliente='" . $idcli . "'";
         $this->db->query($query);
     }

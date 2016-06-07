@@ -67,8 +67,9 @@
 <script language="javascript">
   $("#btnTareas").click(function() {
       <?php if ($this->Model_emp->Numarchivosxorden($orden['idtrabajo']) > 0) : ?>
-        window.open("<?=site_url('cont_empresa/CreaZip/'.$orden['idtrabajo'])?>");
+        window.open("<?=site_url('cont_empresa/CreaZip/'.$orden['idtrabajo'])?>","_blank");
      <?php endif;?>
+      window.open("<?= site_url('Cont_empresa/ExportaOrden/' . $orden['idtrabajo']) ?>","_blank");
      location.href="<?=site_url('cont_empresa/BorrarOrden/'.$orden['idtrabajo'])?>";
   });  
 </script>

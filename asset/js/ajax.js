@@ -13,8 +13,9 @@ function buscador(){
             document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
         }
     };
-
-    xmlhttp.open("POST","http://localhost/Clientes_publibit/index.php/Cont_empresa/BuscaAjax",true);
+    
+    xmlhttp.open("POST","/alumnos/2daw1516/borja/Clientes_Publibit/index.php/Cont_empresa/BuscaAjax",true);
+    //xmlhttp.open("POST","http://localhost/Clientes_publibit/index.php/Cont_empresa/BuscaAjax",true);
     xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
     xmlhttp.send("q="+n);
 }

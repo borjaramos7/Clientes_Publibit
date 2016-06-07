@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <?php endif; ?>
 <form style="border:solid 3px grey;background-color:black; margin-right:520px; padding-top: 10px; opacity: 0.8;"
       action="VerificaLogin" method="post">
-                <div style="margin-left:30px; padding:3px,3px,3px,3px;">
+                <div style="margin-left:20px; padding:3px,3px,3px,3px;">
                     
                     <!--label for="user">Nombre de usuario:</label-->
                     <input name="user" type="text" id="user" class="list-group-item" placeholder="Nombre de usuario"><br>

@@ -66,15 +66,6 @@ class Cont_empresa extends CI_Controller {
                 'listacli' => $listabus));
     }
 
-    /*public function ListarDatos($desde=0) {
-        if ($_SESSION['estado']['ordenado']=='pendientes')
-        {
-            
-        }
-        else
-        {}
-    }*/
-     
     /**
      * Paginacion para empresas
      * @return type
@@ -113,17 +104,12 @@ class Cont_empresa extends CI_Controller {
             $datapend['lista'] = $this->Model_emp->ListaEmpXpend($opciones['per_page'], $desde);
             $datapend['paginacion'] = $this->pagination->create_links();
             return $datapend;
-        } else /*if ($_SESSION['estado']['ordenado']=='N')*/{
+        } else {
             
             $data['lista'] = $this->Model_emp->ListaEmp($opciones['per_page'], $desde);
             $data['paginacion'] = $this->pagination->create_links();
             return $data;
         }
-        /*else if ($ordenado=='B'){
-            $databus['lista'] = $this->Model_emp->Buscador($_SESSION['estado']['buscador']);
-            $databus['paginacion'] = $this->pagination->create_links();
-            return $databus;
-        }*/
     }
 
     /**
@@ -310,8 +296,8 @@ class Cont_empresa extends CI_Controller {
     public function subirarchivo() {
         $numarch = $this->Model_emp->CompNombreArch($_FILES['uploadedfile']['name']);
         $nombrear = $_FILES['uploadedfile']['name'];
-        $target_path = "C:\\xampp\htdocs\Clientes_Publibit\archivos\\";
-        //$target_path='archivos/';Para cuando este en el servidor
+        //$target_path = "C:\\xampp\htdocs\Clientes_Publibit\archivos\\";
+        $target_path='archivos/';//Para cuando este en el servidor
         if ($numarch == 0)
         {$target_path = $target_path . basename($_FILES['uploadedfile']['name']);}
         else {
@@ -406,15 +392,14 @@ class Cont_empresa extends CI_Controller {
      * Recibe la id de un trabajo y exporta un pdf con los datos de esa orden 
      * @param type $idorden
      */
-    public function BorrarOrden($idorden) {
+    public function BorrarOrden($idorden,$redi='S') {
 
         if ($this->Model_emp->Numarchivosxorden($idorden) > 0) {
  
             $this->BorraArchivosOrden($idorden);
         }
-        $this->ExportaOrden($idorden);
         $this->Model_emp->BorraOrden($idorden);
-        //redirect('/Cont_empresa/VerOrdenComp{'.$idorden.'}', 'location', 301);
+        if ($redi=='S'){redirect('/Cont_empresa/VerOrdenesPend/', 'location', 301);}
     }
     /**
      * Recibe la id de una orden y saca todos sus datos para mandarselo a la libreria pdf para que se encargue de exportarlo
@@ -425,18 +410,7 @@ class Cont_empresa extends CI_Controller {
         $orden['nomempresa'] = $this->Model_emp->SacaNombreCliente($orden['_idcliente']);
         $this->pdf->ExportaPdf($orden);
     }
-    
-    /**
-     * LLama a la vista que te pide que confirmes si quieres borrar esos archivos
-     
-    public function BorrarArchConSeg($idorden) {
-        $this->CargaPlantilla(
-                $this->load->view('seg_borrararchivos', array(
-                    'idorden' => $idorden
-                        ), TRUE), "Descargados los archivos de esta orden.<br><br>"
-                . "¿Estas seguro de borrar dichos archivos ,asi como la propia orden del sistema?");
-    }*/
-   
+
     /**
      * Recibe una id de una orden y elimina los archivos que tenga dicha orden asi como su existencia en la bbdd
      * @param type $idorden
@@ -444,8 +418,8 @@ class Cont_empresa extends CI_Controller {
     public function BorraArchivosOrden($idorden) {
         $archivos = $this->Model_emp->ArchivosXOrden($idorden);
         foreach ($archivos as $archivo) {
-            $file = "C:\\xampp\htdocs\Clientes_Publibit\archivos\\" . $archivo['nomarchivo'];
-            //$file = "archivos/" . $archivo['nomarchivo'];Para servidor
+            //$file = "C:\\xampp\htdocs\Clientes_Publibit\archivos\\" . $archivo['nomarchivo'];
+            $file = "archivos/" . $archivo['nomarchivo'];//Para servidor
             $do = unlink($file); //elimina archivo
             $this->Model_emp->Borraarchivo($archivo['nomarchivo']); //elimina datos del archivo de la BBDD
 
@@ -466,10 +440,10 @@ class Cont_empresa extends CI_Controller {
         $archivos = $this->Model_emp->ArchivosXOrden($idorden);
         
         foreach ($archivos as $archivo) {
-            $this->zip->read_file("C:/xampp/htdocs/Clientes_Publibit/archivos/".$archivo['nomarchivo']); 
+            $this->zip->read_file("archivos/".$archivo['nomarchivo']);//para servidor
+            //$this->zip->read_file("C:/xampp/htdocs/Clientes_Publibit/archivos/".$archivo['nomarchivo']); 
         }
         $this->zip->download("ficheros_orden_".$idorden."_.zip");
-
     }
     
     /**
@@ -486,10 +460,10 @@ class Cont_empresa extends CI_Controller {
         
         $listatrab = $this->Model_emp->TrabajosXEmp($idcli);
         foreach ($listatrab as $trabajo) {
-          $this->BorrarOrden($trabajo['idtrabajo']); 
+          $this->BorrarOrden($trabajo['idtrabajo'],'N'); 
         }
         
-        $this->Model_emp->BorraEmpresa($idcli);
+        $this->Model_emp->DeleteEmpresa($idcli);
         redirect('/Cont_empresa/VerEmpresa', 'location', 301);
         
  
