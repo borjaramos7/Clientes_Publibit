@@ -100,7 +100,7 @@ class Cont_user extends CI_Controller {
         if ($existe) {
             redirect('Cont_user/IrInicio', 'location', 301);
         } else
-            $this->Login("Usuario o contraseña incorrectos");
+        {$this->Login("Usuario o contraseña incorrectos");}
     }
 
     /**
@@ -149,7 +149,34 @@ class Cont_user extends CI_Controller {
         $this->CargaPlantilla($this->load->view('Mod_user', array(
                     'usuarios' => $user), TRUE), "Datos de " . ($this->session->userdata('username')));
     }
-
+    
+    public function CambiarContrasena() {
+        
+        
+        $this->form_validation->set_rules('pass', 'Contraseña', 'required|matches[repass]');
+        $this->form_validation->set_rules('repass', 'Confirmar Contraseña', 'required');
+        $this->form_validation->set_rules('contvieja', 'Contraseña anterior', 'required|callback_Contraant');
+        $this->form_validation->set_message('Contraant', 'La contraseña que has introducido como anterior es erronea');
+        $this->form_validation->set_message('required', 'El campo %s no puede estar vacio');
+        $this->form_validation->set_message('matches', '%s no coincide con %s');
+        
+        if ($this->form_validation->run() == FALSE) {
+            $this->CargaDatosUs();
+        } else {
+            $cont_encrip = md5($this->input->post('repass'));
+            $this->Model_us->ModificaContrasena($cont_encrip);
+            redirect('', 'location', 301);
+        }
+    }
+    
+    public function Contraant() {
+        $contrasena = md5($this->input->post('contvieja'));
+        if ($this->Model_us->CompUser($this->session->userdata('username'),$contrasena)){
+            return true;
+        }
+    else {return false;}
+    }
+    
     /**
      * Comprueba que los datos modificados cumplen con las reglas de filtrado, si las cumplen las inserta en la BBDD.
      */
@@ -181,6 +208,9 @@ class Cont_user extends CI_Controller {
         $this->form_validation->set_rules('correo', 'Email', 'required|valid_email');
         //$this->form_validation->set_rules('pass', 'Contraseña', 'required|matches[repass]');
         //$this->form_validation->set_rules('repass', 'Confirmar Contraseña', 'required');
+        
+        $this->form_validation->set_message('required', 'El campo %s no puede estar vacio');
+        $this->form_validation->set_message('valid_email', 'El email no tiene el formato correcto');
     }
 
 }

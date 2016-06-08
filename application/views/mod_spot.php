@@ -9,11 +9,11 @@
         </div>
             <div id="cuerpo">
  
-                <form style="border:solid 3px orange; margin-right: 380px; margin-left: 2px"
+               <form style="border:solid 3px orange; margin-right: 60%; margin-left: 3%"
                       action="" method="post" >
                     <input type="hidden" id="idemp" name="idemp" value="<?= $idemp ;?>">
                     <input type="hidden" id="idspot" name="idspot" value="<?= $spot['idspot'] ;?>">
-                    <div style="margin-left:30px; padding:3px,3px,3px,3px;">
+                    <div style="margin-left:10%; padding:2% 3% 2% 2%;">
                     <label for="meses">Meses Contratado: </label>
                         <input name="meses" type="number" id="meses" class="list-group-item"
                                accept="" value="<?php echo $spot['mesescont'];?>" ><br>

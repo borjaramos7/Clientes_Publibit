@@ -118,12 +118,12 @@
         <div class="col-md-2">
             <div class="row">
 
-                <div id="botones" style="text-align: left;" class="col-md-12">
+                <div id="botones" style="text-align: left; margin-right: 10%; margin-left: 1%;">
                     <?php if ($this->session->userdata('username')!=null) :?>
                     <b><div class="list-group">
                         <a href="<?= site_url('Cont_empresa/AddEmpresa')?>" 
-                           style="background-color: orange" class="list-group-item" title="Añadir cliente">
-                            <i class="fa fa-user-plus fa-lg" aria-hidden="true"></i>&nbsp;Añadir cliente</a>
+                           style="background-color: orange" class="list-group-item" title="AÃ±adir cliente">
+                            <i class="fa fa-user-plus fa-lg" aria-hidden="true"></i>&nbsp;AÃ±adir cliente</a>
                         </div>
                     <br>
                     <div class="list-group">
@@ -138,21 +138,21 @@
                     <hr size="2"/>
                             
                             <a href="<?= site_url('Cont_spot/AddPantalla')?>" 
-                           style="background-color: activecaption; font-size:12px;" class="list-group-item" title="Añadir pantalla">
+                           style="background-color: #BEBFBE; font-size:11px;" class="list-group-item" title="AÃ±adir pantalla">
                             <i class="fa fa-tv fa-lg" aria-hidden="true"></i>
-                                <i class="fa fa-plus fa-lg" aria-hidden="true"></i>&nbsp;Añadir Pantalla</a>
+                                <i class="fa fa-plus fa-lg" aria-hidden="true"></i>&nbsp;AÃ±adir Pantalla</a>
                             
                             <a href="<?= site_url('Cont_spot/VerPantallas')?>" 
-                           style="background-color: activecaption;" class="list-group-item" title="Ver Pantallas">
+                           style="background-color: #BEBFBE;" class="list-group-item" title="Ver Pantallas">
                             <i class="fa fa-tv fa-lg" aria-hidden="true"></i>
                                 &nbsp;Ver Pantallas</a>
                     <br>  
                     <a href="<?= site_url('Cont_spot/VerSpotsActivos')?>" 
-                           style="background-color: activecaption;" class="list-group-item" title="Spots activos">
+                           style="background-color: #BEBFBE;" class="list-group-item" title="Spots activos">
                             <i class="fa fa-lightbulb-o fa-lg" aria-hidden="true"></i>
                                 &nbsp;Spots activos</a>
                     <br>
-                    <?php if ($this->Model_spot->HayAvisos()>1):?>
+                    <?php if ($this->Model_spot->HayAvisos()>0):?>
                     <a href="<?= site_url('Cont_spot/SpotsAcabandose')?>"
                            style="background-color: red; color:black;text-align: center" class="list-group-item" title="Avisos">
                             <i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>

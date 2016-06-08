@@ -25,6 +25,15 @@ class Model_spot extends CI_Model {
         $this->db->query($query);
     }
     
+    public function BorraAsoc($idasoc) {
+        $query2="select _idspot from spotxpantalla where idspotxpant=".$idasoc;
+        $idspot=$this->db->query($query2);
+        $query = "delete from spotxpantalla where idspotxpant=".$idasoc;
+        $this->db->query($query);
+        
+        return $idspot->row()->_idspot;
+    }
+    
     /**
      * recibe la id de un cliente y devuelve el numero de spots que tiene contratados
      * @param type $idcli

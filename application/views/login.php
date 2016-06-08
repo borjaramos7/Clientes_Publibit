@@ -15,7 +15,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <strong><?=$error?></strong>
     </div>
     <?php endif; ?>
-<form style="border:solid 3px grey;background-color:black; margin-right:520px; padding-top: 10px; opacity: 0.8;"
+<form style="border:solid 3px grey;background-color:black; margin-right:65%; padding-top: 10px; opacity: 0.8;"
       action="VerificaLogin" method="post">
                 <div style="margin-left:20px; padding:3px,3px,3px,3px;">
                     

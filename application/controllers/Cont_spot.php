@@ -102,7 +102,12 @@ class Cont_spot extends CI_Controller {
                     'spot' => $spot
                         ), TRUE), "Spot nº " . $spot['idspot']);
     }
-
+    
+    public function BorrarAsoc($idasoc){
+        $idspot=$this->Model_spot->BorraAsoc($idasoc);
+        redirect('/Cont_spot/VerSpotComp/' .$idspot, 'location', 301);
+    }
+    
     /**
      * Funcion encargada de crear las reglas para validar un spot
      */

@@ -31,6 +31,12 @@
                     <p><b>Fecha fin: <?php echo $asociacion['fechafin'] ?></b></p>
                 </div>
                 <div class="modal-footer">
+                    
+                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="text-align:center">
+                    <a href="<?= site_url("Cont_spot/BorrarAsoc/{$asociacion['idspotxpant']}")?>" 
+                       class="btn-danger list-group-item" title="Eliminar asociacion">
+                        <img src="<?= base_url() . "/asset/img/borrarpant.png" ?>"/>&nbsp;Eliminar asociacion</a>
+                </div>
                 </div>
             </div>
         </div>
@@ -41,19 +47,19 @@
     
     
 <legend>Acciones</legend>
-    <div class="col-md-3" style="text-align:left">
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" style="text-align:center">
         <a href="<?= site_url("Cont_spot/ModificaSpot/{$spot['idspot']}") ?>" 
            class="btn-warning list-group-item" title="Modificar Spot">
             <img src="<?= base_url() . "/asset/img/edit.png" ?>"/>&nbsp;Modificar spot</a>
     </div>
 
-    <div class="col-md-3" style="text-align:left;font-size: 12.5px">
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" style="text-align:center">
         <a href="<?= site_url("Cont_spot/AsociarConPant/{$spot['idspot']}") ?>" 
            class="btn-warning list-group-item" title="Asociar a pantalla">
             <img src="<?= base_url() . "/asset/img/pantalla.png" ?>"/>&nbsp;Asociar a pantalla</a>
     </div>
 
-    <div class="col-md-3" style="text-align:left">
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" style="text-align:center">
         <a href="<?= site_url("Cont_spot/BorrarSpot/{$spot['idspot']}") ?>" 
            class="btn-warning list-group-item" title="Borrar Spot">
             <img src="<?= base_url() . "/asset/img/borrarpant.png" ?>"/>&nbsp;Borrar Spot</a>

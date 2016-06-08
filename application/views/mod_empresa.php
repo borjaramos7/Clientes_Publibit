@@ -9,10 +9,10 @@
         </div>
             <div id="cuerpo">
  
-                <form style="border:solid 3px orange; margin-right: 420px; margin-left: 2px" 
+                <form style="border:solid 3px orange; margin-right: 65%; margin-left: 2%" 
                       action="" method="post" >
                 <input type="hidden" id="idemp" name="idemp" value="<?= $datosemp['idcliente'] ;?>">
-                <div style="margin-left:30px; padding:3px 3px 3px 3px;">
+                <div style="margin-left:5%; padding:2% 2% 2% 2%;">
                     <label for="nombreemp">Nombre de empresa/cliente:</label>
                         <input name="nombreemp" type="text" id="nombreemp" class="list-group-item"
                                accept="" value="<?php echo $datosemp['nomempresa'];?>" >

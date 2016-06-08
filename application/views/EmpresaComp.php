@@ -1,5 +1,5 @@
 <fieldset>
-    <legend>Nª Contacto</legend>
+    <legend>Nº Contacto</legend>
     <span class="help-block"><?= $datosemp['numcontacto'] ?></span>
     <legend>Email</legend>
     <span class="help-block"><?= $datosemp['emailcontacto'] ?></span>
@@ -8,37 +8,40 @@
     <legend>Ordenes pendientes</legend>
     <span class="help-block"><?= $this->Model_emp->NumPendientes($datosemp['idcliente'])?></span>
     <legend>Acciones</legend>
-    <div class="col-md-3" style="text-align:left">
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" style="text-align:center">
         <a href="<?= site_url("Cont_empresa/AddTrabajo/{$datosemp['idcliente']}")?>" 
-                           class="btn-warning list-group-item" title="Añadir trabajo">
-            <img src="<?=base_url()."/asset/img/nuevoarchivo.png"?>"/>&nbsp;Añadir trabajo</a>
+                           class="btn-warning list-group-item" title="Crear trabajo">
+            <img src="<?=base_url()."/asset/img/nuevoarchivo.png"?>"/>&nbsp;Crear trabajo</a>
     </div>
-    <div class="col-md-3" style="text-align:left">
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" style="text-align:center">
         <a href="<?= site_url("Cont_spot/NuevoSpot/{$datosemp['idcliente']}")?>" 
-                           class="btn-warning list-group-item" title="Añadir spot">
-            <img src="<?=base_url()."/asset/img/nuevospot.png"?>"/>&nbsp;Añadir Spot</a>
+                           class="btn-warning list-group-item" title="Crear spot">
+            <img src="<?=base_url()."/asset/img/nuevospot.png"?>"/>&nbsp;Crear Spot</a>
     </div>
-    <br><br><br>
-    <div class="col-md-3" style="text-align:left">
-            <a href="<?= site_url("Cont_empresa/VerTrabajos/{$datosemp['idcliente']}")?>" 
-                           class="btn-warning list-group-item" title="Ver trabajos">
-            <img src="<?=base_url()."/asset/img/listar.png"?>"/>&nbsp;Ver trabajos</a>
-    </div>
-    <div class="col-md-3" style="text-align:left">
-            <a href="<?= site_url("Cont_spot/VerSpots/{$datosemp['idcliente']}")?>" 
-                           class="btn-warning list-group-item" title="Ver spots">
-            <img src="<?=base_url()."/asset/img/listar.png"?>"/>&nbsp;Ver spots</a>
-    </div>
-    <div class="col-md-3" style="text-align:left">
+    
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" style="text-align:center">
             <a href="<?= site_url("Cont_empresa/ModificaEmpresa/{$datosemp['idcliente']}")?>" 
                            class="btn-warning list-group-item" title="Modificar datos">
             <img src="<?=base_url()."/asset/img/edit.png"?>"/>&nbsp;Modificar datos</a>
     </div>
-    <div class="col-md-3" style="text-align:left">
-        <button style="text-align:left" data-toggle="modal" data-target="#modal_emp_<?= $datosemp['idcliente'];?>"
-                class="btn btn-danger list-group-item" id="borrar">
+    
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" style="text-align:center">
+            <a href="<?= site_url("Cont_empresa/VerTrabajos/{$datosemp['idcliente']}")?>" 
+                           class="btn-warning list-group-item" title="Ver trabajos">
+            <img src="<?=base_url()."/asset/img/listar.png"?>"/>&nbsp;Ver trabajos</a>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" style="text-align:center">
+            <a href="<?= site_url("Cont_spot/VerSpots/{$datosemp['idcliente']}")?>" 
+                           class="btn-warning list-group-item" title="Ver spots">
+            <img src="<?=base_url()."/asset/img/listar.png"?>"/>&nbsp;Ver spots</a>
+    </div>
+    
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" style="text-align:center">
+        <button style="text-align:center" data-toggle="modal" data-target="#modal_emp_<?= $datosemp['idcliente'];?>"
+                class="btn-danger list-group-item" id="borrar">
             <img src="<?=base_url()."/asset/img/borrar.png"?>"/>Eliminar cliente</button>
     </div>
+    
 </fieldset>
 
 <div class="modal fade" id="modal_emp_<?= $datosemp['idcliente'];?>" role="dialog">
@@ -46,7 +49,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button><br>
-                    <h4 class="modal-title">¿Estas seguro de borrar esta empresa?<br><br>Se borraran recursivamente todos los datos
+                    <h4 class="modal-title">Â¿Estas seguro de borrar esta empresa?<br><br>Se borraran recursivamente todos los datos
                     asociados a esta empresa(ordenes y spots asi como sus asociaciones).</h4>
                 </div>
 

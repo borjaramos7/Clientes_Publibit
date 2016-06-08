@@ -32,9 +32,14 @@ class Model_us extends CI_Model {
         else return false;
     }
     
+    /**
+     * Funcion que comprueba si hay un usuario logueado en ese momento
+     * @return type
+     */
     public function EstaDentro() {
         return $this->session->userdata("logged_in");
     }
+    
     
     public function Logout() {
         $this->session->set_userdata("logged_in",false);
@@ -113,7 +118,12 @@ class Model_us extends CI_Model {
         $this->db->where('nombreus', $this->session->userdata('username'));
         $this->db->update('usuario', $nuevosdatos);
     }
-
+    
+    public function ModificaContrasena($nuevacont) {
+        $query = "UPDATE usuario SET contrasena='".$nuevacont."' where nombreus= '" . $this->session->userdata('username') . "'";
+        $this->db->query($query);
+    }
+    
     /**
      * Recibe el nombre de usuario y devuelve su email
      * @param type $nomuser

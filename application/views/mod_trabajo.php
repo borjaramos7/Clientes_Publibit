@@ -8,10 +8,10 @@
             <?php endif; ?>
         </div>
             <div id="cuerpo">
-                <form style="border:solid 3px orange; margin-right: 170px; margin-left: 2px" action="../ModificaOrden" method="post" >
+                <form style="border:solid 3px orange; margin-right: 22%; margin-left: 2%" action="../ModificaOrden" method="post" >
                     <input type="hidden" id="idemp" name="idemp" value="<?= $idemp ;?>">
                     <input type="hidden" id="idorden" name="idorden" value="<?= $orden['idtrabajo'] ;?>">
-                    <div style="margin-left:30px; padding:3px,3px,3px,3px;">
+                    <div style="margin-left:4%; padding:2% 2% 2% 2%;">
                     <label for="denom">Denominacion trabajo</label>
                         <input name="denom" type="text" id="denom" class="list-group-item"
                                accept="" value="<?= $orden['denominacion'];?>" ><br>
